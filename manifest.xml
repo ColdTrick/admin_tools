@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest>
+	<field key="author" value="ColdTrick IT Solutions" />
+	<field key="version" value="1.0" />
+	<field key="description" value="Admins can temporarily turn of their admin status" />
+	<field key="website" value="http://www.coldtrick.com/" />
+	<field key="copyright" value="(C) ColdTrick IT Solutions 2009" />
+	<field key="licence" value="GNU Public License version 2" />
+	<field key="elgg-version" value="2009030101" />
+</plugin_manifest>
+<!--
+
+
+======================
+Version history
+======================
+
+1.0:
+	- initial version
+
+-->
