@@ -40,7 +40,7 @@
 					$res = $zip->open($destination, ZipArchive::CREATE);
 					
 					if ($res === TRUE) {
-						addFolderToZip($plugin_folder, $zip, $plugin_name . "/");
+						admin_tools_add_folder_to_zip($plugin_folder, $zip, $plugin_name . "/");
 						$zip->close();
 						
 						$zipData = file_get_contents($destination);

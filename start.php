@@ -1,6 +1,6 @@
 <?php
-	global $CONFIG;
 	
+	// load global functions
 	require_once(dirname(__FILE__) . "/lib/functions.php");
 
 	function admin_tools_init(){
@@ -17,6 +17,7 @@
 	// register default elgg event
 	register_elgg_event_handler("init", "system", "admin_tools_init");
 	
+	// register actions
 	register_action("admin_tools/switch_admin", false, dirname(__FILE__) . "/actions/switch_admin.php"); // don't make admin only!!!
 	register_action("admin_tools/plugin_action", false, dirname(__FILE__) . "/actions/plugin_action.php", true);
 ?>
