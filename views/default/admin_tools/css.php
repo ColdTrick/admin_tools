@@ -1,4 +1,9 @@
-<?php ?>
+<?php 
+	$always = false;
+	if(get_plugin_setting("always_show", "admin_tools") == "yes"){
+		$always = true;
+	}
+?>
 #admin_tools_toggle_tools {
 	position: fixed;
 	right: 0px;
@@ -15,12 +20,17 @@
 	padding: 2px;
 }
 
+<?php if(!$always) { ?>
 #admin_tools_toggle_tools:hover #admin_tools_info_container {
 	display: block;
 }
 
 #admin_tools_info_container {
 	display: none;
+}
+<?php } ?>
+	
+#admin_tools_info_container {
 	color: white;
 	background: black;
 	padding: 5px;

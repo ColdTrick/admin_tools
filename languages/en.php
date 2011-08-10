@@ -10,6 +10,9 @@
 		"admin_tools:plugin_action:export:noplugin" => "Error exporting. No plugin selected.",
 		
 		"admin_tools:plugin_admin:show" => "Show inactive plugins",
+		
+		// settings
+		'admin_tools:settings:always_show' => "Always show adminbox",
 	);
 					
 	add_translation("en",$english);

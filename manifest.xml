@@ -14,6 +14,9 @@
 ======================
 Version history
 ======================
+x.x:
+	- added: option to always show admin box
+
 1.1 (2011-07-12):
 	- added: ignore list of files/folders for plugin extract
 	- changed: name of a function be be inline with naming convention
