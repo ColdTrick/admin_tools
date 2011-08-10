@@ -16,6 +16,7 @@ Version history
 ======================
 x.x:
 	- added: option to always show admin box
+	- added: stats box with info
 
 1.1 (2011-07-12):
 	- added: ignore list of files/folders for plugin extract

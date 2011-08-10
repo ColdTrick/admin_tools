@@ -70,3 +70,16 @@ div.plugin_details.not-active {
 .plugin_inactive {
 	color:red;
 }
+
+#admin_tools_stats_box {
+	width: 250px;
+	border: 1px solid black;
+	position: fixed;
+	top: 50%;
+	right: 5px;
+	padding: 5px;
+}
+
+#admin_tools_stats_box table {
+	width: 100%;
+}

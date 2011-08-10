@@ -6,7 +6,13 @@
 	function admin_tools_init(){
 		if($user = get_loggedin_user()){
 			if(isadminloggedin() || get_private_setting($user->guid, "admin_tools_switch_admin") == md5($user->guid . $user->salt)){
+				// admin box
 				elgg_extend_view("page_elements/header", "admin_tools/tools");
+				
+				// stats info
+				elgg_extend_view("footer/analytics", "admin_tools/footer", 999);
+				
+				// plugin list css fix
 				elgg_extend_view("admin/plugins","admin_tools/plugins",400);
 			}
 		}
