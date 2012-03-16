@@ -1,6 +1,6 @@
 <?php 
 	$always = false;
-	if(get_plugin_setting("always_show", "admin_tools") == "yes"){
+	if(elgg_get_plugin_setting("always_show", "admin_tools") == "yes"){
 		$always = true;
 	}
 ?>
@@ -59,10 +59,6 @@
     padding: 0;
 }
 
-div.plugin_details.not-active {
-	display: none;
-}
-
 .plugin_active {
 	color:green;
 }
@@ -78,6 +74,7 @@ div.plugin_details.not-active {
 	top: 50%;
 	right: 5px;
 	padding: 5px;
+	background-color: #FFFFFF;
 }
 
 #admin_tools_stats_box table {

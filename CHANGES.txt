@@ -1,0 +1,18 @@
+= Version history =
+2.0:
+
+- plugin made compatible with Elgg 1.8
+
+1.2:
+
+- added: option to always show admin box
+- added: stats box with info
+
+1.1 (2011-07-12):
+
+- added: ignore list of files/folders for plugin extract
+- changed: name of a function be be inline with naming convention
+
+1.0:
+
+- initial version

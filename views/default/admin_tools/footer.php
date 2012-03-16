@@ -8,19 +8,19 @@
 <div id="admin_tools_stats_box">
 	<table>
 		<tr>
-			<td>PHP servertime: </td>
+			<td><?php echo elgg_echo('admin_tools:overview:php_servertime');?>: </td>
 			<td><?php echo $time; ?></td>
 		</tr>
 		<tr>
-			<td>DB calls: </td>
+			<td><?php echo elgg_echo('admin_tools:overview:db_calls');?>: </td>
 			<td><?php echo $dbcalls; ?></td>
 		</tr>
 		<tr>
-			<td>included files: </td>
+			<td><?php echo elgg_echo('admin_tools:overview:included_files');?>: </td>
 			<td><?php echo $num_included_files; ?></td>
 		</tr>
 		<tr>
-			<td>Max memory used: </td>
+			<td><?php echo elgg_echo('admin_tools:overview:max_memory_used');?>: </td>
 			<td><?php echo $max_mem; ?> bytes</td>
 		</tr>
 	</table>

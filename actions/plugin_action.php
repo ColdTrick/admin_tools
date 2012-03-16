@@ -7,26 +7,35 @@
 	
 	$plugin_name = get_input('plugin');
 	$plugin_action = get_input('plugin_action');
-	if(!empty($plugin_name)){
-		switch($plugin_action){
+	if(!empty($plugin_name))
+	{
+		switch($plugin_action)
+		{
 			case elgg_echo("enable"):
-				if (enable_plugin($plugin_name)) {
+				if (($plugin = elgg_get_plugin_from_id($plugin_name)) && $plugin->activate())
+				{
 					system_message(sprintf(elgg_echo('admin:plugins:enable:yes'), $plugin_name));
-				} else {
+				} 
+				else
+				{
 					register_error(sprintf(elgg_echo('admin:plugins:enable:no'), $plugin_name));
 				}
 				break;
 			case elgg_echo("disable"):
-				if (disable_plugin($plugin_name)) {
+				if (($plugin = elgg_get_plugin_from_id($plugin_name)) && $plugin->deactivate())
+				{
 					system_message(sprintf(elgg_echo('admin:plugins:disable:yes'), $plugin_name));
-				} else {
+				}
+				else
+				{
 					register_error(sprintf(elgg_echo('admin:plugins:disable:no'), $plugin_name));
 				}
 				break;
 			case elgg_echo("export"):
-				$manifest = load_plugin_manifest($plugin_name);
-				if($manifest){
-					$postfix = "_v" . $manifest['version'];
+				$plugin = elgg_get_plugin_from_id($plugin_name);
+				if($manifest = $plugin->getManifest())
+				{
+					$postfix = "_v" . $manifest->getVersion();
 				} 
 				$plugin_folder = $CONFIG->pluginspath . $plugin_name . "/";
 				
@@ -63,4 +72,3 @@
 	}
 	forward(REFERER);
 	
-?>
