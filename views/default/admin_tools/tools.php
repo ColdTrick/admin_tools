@@ -3,7 +3,7 @@
 	$plugins = elgg_get_plugins('all');
 	
 	$plugin_options = array();
-	foreach($plugins as $plugin){
+	foreach($plugins as $plugin) {
 		if($plugin->isActive()){
 			$class = "plugin_active";
 		} else {
@@ -16,7 +16,7 @@
 	ksort($plugin_options);
 	
 	$options = "";
-	foreach($plugin_options as $option){
+	foreach($plugin_options as $option) {
 		$options .= $option;
 	}
 
@@ -25,8 +25,7 @@
 	<div id="admin_tools_info_container">
 		<?php if(elgg_is_admin_logged_in()){ ?>
 		<div id="admin_tools_plugins">
-			
-			<form action="<?php echo $vars["url"]; ?>action/admin_tools/plugin_action" method="post">
+			<form action="<?php echo elgg_get_site_url(); ?>action/admin_tools/plugin_action" method="post">
 				<?php echo elgg_view("input/securitytoken"); ?>
 				Plugins
 				<select name="plugin">
@@ -48,7 +47,7 @@
 			</table>
 		</div>	
 		<div>
-			<a href="<?php echo elgg_add_action_tokens_to_url($vars["url"] . "action/admin_tools/switch_admin"); ?>"><?php echo elgg_echo('admin_tools:overview:switch');?></a>
+			<a href="<?php echo elgg_add_action_tokens_to_url(elgg_get_site_url() . "action/admin_tools/switch_admin"); ?>"><?php echo elgg_echo('admin_tools:overview:switch');?></a>
 		</div>
 	</div>
 	<a href="javascript:void(0);">+</a>
