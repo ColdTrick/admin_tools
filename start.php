@@ -43,8 +43,23 @@
 			case 2:
 				$error_level = 'Warning';
 				break;
+			case 4:
+				$error_level = 'Parse error';
+				break;
 			case 8:
 				$error_level = 'Notice';
+				break;
+			case 16:
+				$error_level = 'Core error';
+				break;
+			case 32:
+				$error_level = 'Core warning';
+				break;
+			case 64:
+				$error_level = 'Compile error';
+				break;
+			case 128:
+				$error_level = 'Compile warning';
 				break;
 			case 256:
 				$error_level = 'User error';
@@ -55,9 +70,19 @@
 			case 1024:
 				$error_level = 'User notice';
 				break;
+			case 2048:
+				$error_level = 'Suggestion';
+				break;
 			case 4096:
 				$error_level = 'Unrecoverable error';
 				break;
+			case 8192:
+				$error_level = 'Deprecated notice';
+				break;
+			case 16384:
+				$error_level = 'User deprecated notice';
+				break;
+			case 32767:
 			default:
 				$error_level = 'Unknown error (' . $errno . ')';
 				break;
