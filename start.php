@@ -37,6 +37,8 @@
 	}
 
 	function admin_tools_error_handler($errno, $errstr, $errfile = '', $errline = 0, $vars = array()) {
+		$error_level = '';
+		
 		switch ($errno) {
 			case 2:
 				$error_level = 'Warning';
@@ -52,6 +54,15 @@
 				break;
 			case 1024:
 				$error_level = 'User notice';
+				break;
+			case 4096:
+				$error_level = 'Unrecoverable error';
+				break;
+			case 8191:
+				$error_level = 'Error';
+				break;
+			default:
+				$error_level = 'PHP Error';
 				break;
 		}
 
