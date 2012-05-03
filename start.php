@@ -82,7 +82,6 @@
 			case 16384:
 				$error_level = 'User deprecated notice';
 				break;
-			case 32767:
 			default:
 				$error_level = 'Unknown error (' . $errno . ')';
 				break;
