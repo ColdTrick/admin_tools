@@ -58,11 +58,8 @@
 			case 4096:
 				$error_level = 'Unrecoverable error';
 				break;
-			case 8191:
-				$error_level = 'Error';
-				break;
 			default:
-				$error_level = 'PHP Error';
+				$error_level = 'Unknown error (' . $errno . ')';
 				break;
 		}
 
