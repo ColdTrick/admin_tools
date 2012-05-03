@@ -37,8 +37,26 @@
 	}
 
 	function admin_tools_error_handler($errno, $errstr, $errfile = '', $errline = 0, $vars = array()) {
-		elgg_dump("$errline: $errstr in ($errfile)", true, $errno);
-		
+		switch ($errno) {
+			case 2:
+				$error_level = 'Warning';
+				break;
+			case 8:
+				$error_level = 'Notice';
+				break;
+			case 256:
+				$error_level = 'User error';
+				break;
+			case 512:
+				$error_level = 'User warning';
+				break;
+			case 1024:
+				$error_level = 'User notice';
+				break;
+		}
+
+		elgg_dump("$error_level: $errstr in $errfile on line ($errline)", true, $errno);
+
 		_elgg_php_error_handler($errno, $errstr, $errfile, $errline, $vars);
 	}
 
