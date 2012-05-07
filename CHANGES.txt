@@ -1,4 +1,10 @@
 = Version history =
+x.x:
+
+- added: server information on admin page
+- added: error logging of actions/ajax calls
+- added: dutch translation
+
 2.0 (2012-03-16):
 
 - plugin made compatible with Elgg 1.8
