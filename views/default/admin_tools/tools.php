@@ -41,7 +41,11 @@
 		<div>
 			<table>
 				<tr><td><?php echo elgg_echo('admin_tools:overview:context');?></td><td><?php echo elgg_get_context();?></td></tr>
-				<tr><td><?php echo elgg_echo('admin_tools:overview:pageowner');?></td><td><?php echo elgg_get_page_owner_entity()->name;?></td></tr>
+				<tr><td><?php echo elgg_echo('admin_tools:overview:pageowner');?></td><td><?php
+					if ($page_owner_entity = elgg_get_page_owner_entity()) {
+						echo $page_owner_entity->name;
+					}
+				?></td></tr>
 				<tr><td><?php echo elgg_echo('admin_tools:overview:pageownerid');?></td><td><?php echo elgg_get_page_owner_guid();?></td></tr>
 				<tr><td><?php echo elgg_echo('admin_tools:overview:userid');?></td><td><?php echo elgg_get_logged_in_user_guid();?></td></tr>
 			</table>
