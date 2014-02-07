@@ -86,4 +86,6 @@
 	top: 50px;
 	left: 10px;
 	width: 300px;
+	max-height: 70%;
+    overflow: auto;
 }
