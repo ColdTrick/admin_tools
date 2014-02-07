@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$always = false;
 	if(elgg_get_plugin_setting("always_show", "admin_tools") == "yes"){
 		$always = true;
@@ -29,7 +29,7 @@
 	display: none;
 }
 <?php } ?>
-	
+
 #admin_tools_info_container {
 	color: white;
 	background: black;
@@ -79,4 +79,11 @@
 
 #admin_tools_stats_box table {
 	width: 100%;
+}
+
+.developers-log {
+	position: fixed;
+	top: 50px;
+	left: 10px;
+	width: 300px;
 }
