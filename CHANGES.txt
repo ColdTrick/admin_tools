@@ -1,9 +1,10 @@
 Version history
 ===============
 
-3.0:
+3.0 (2016-01-25):
 
-- rewrote the entire plugin
+- added: composer support
+- complete plugin rewrite for Elgg 1.9
 
 2.1 (2014-08-19):
 
