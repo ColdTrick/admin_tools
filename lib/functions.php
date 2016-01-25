@@ -6,12 +6,11 @@
 /**
  * Check if the user is an admin
  *
- * @param ElggUser $user the user to check (default is current logged in user)
+ * @param ElggUser $user the user to check (default: current user)
  *
  * @return bool
  */
 function admin_tools_is_admin_user(ElggUser $user = null) {
-	$result = false;
 	
 	// no param, check current logged in user
 	if (empty($user)) {
@@ -19,28 +18,35 @@ function admin_tools_is_admin_user(ElggUser $user = null) {
 	}
 	
 	// no user to check
-	if (empty($user) || !elgg_instanceof($user, "user")) {
-		return $result;
+	if (!($user instanceof ElggUser)) {
+		return false;
 	}
 	
+	// user is admin
 	if ($user->isAdmin()) {
-		$result = true;
-	} elseif ($setting = elgg_get_plugin_user_setting("switched_admin", $user->getGUID(), "admin_tools")) {
-		
-		if (admin_tools_validate_switch_admin_secret($setting, $user)) {
-			$result = true;
-		}
+		return true;
 	}
 	
-	return $result;
+	// is user a hidden admin?
+	$setting = elgg_get_plugin_user_setting('switched_admin', $user->getGUID(), 'admin_tools');
+	if (empty($setting)) {
+		return false;
+	}
+	
+	// validate setting
+	if (admin_tools_validate_switch_admin_secret($setting, $user)) {
+		return true;
+	}
+	
+	return false;
 }
 
 /**
  * Create a secret code to toggle admin/normal user
  *
- * @param ElggUser $user the user to create the secret for
+ * @param ElggUser $user the user to create the secret for (default: current user)
  *
- * @return bool|string
+ * @return false|string
  */
 function admin_tools_make_switch_admin_secret(ElggUser $user = null) {
 	
@@ -50,18 +56,25 @@ function admin_tools_make_switch_admin_secret(ElggUser $user = null) {
 	}
 	
 	// no user to check
-	if (empty($user) || !elgg_instanceof($user, "user")) {
+	if (!($user instanceof ElggUser)) {
 		return false;
 	}
 	
-	return hash_hmac("sha256", $user->time_created, get_site_secret());
+	return hash_hmac('sha256', $user->time_created, get_site_secret());
 }
 
+/**
+ * Validate the secret of a user to switch to the real thing
+ *
+ * @param string   $secret the string to validate
+ * @param ElggUser $user   the user to validate for (default: current user)
+ *
+ * @return bool
+ */
 function admin_tools_validate_switch_admin_secret($secret, ElggUser $user = null) {
-	$result = false;
 	
 	if (empty($secret)) {
-		return $result;
+		return false;
 	}
 	
 	// no param, check current logged in user
@@ -70,14 +83,11 @@ function admin_tools_validate_switch_admin_secret($secret, ElggUser $user = null
 	}
 	
 	// no user to check
-	if (empty($user) || !elgg_instanceof($user, "user")) {
+	if (!($user instanceof ElggUser)) {
 		return false;
 	}
 	
 	$correct_secret = admin_tools_make_switch_admin_secret($user);
-	if (!empty($correct_secret) && ($correct_secret === $secret)) {
-		$result = true;
-	}
 	
-	return $result;
+	return ($correct_secret === $secret);
 }
