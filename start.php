@@ -27,4 +27,3 @@ function admin_tools_init() {
 	// register actions
 	elgg_register_action('admin_tools/toggle_admin', dirname(__FILE__) . '/actions/toggle_admin.php');
 }
-	
