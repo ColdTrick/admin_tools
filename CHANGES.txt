@@ -1,6 +1,11 @@
 Version history
 ===============
 
+4.0 (2017-11-10):
+
+- changed: increased minimal Elgg version requirement
+- fixed: notifications from security_tools when switching admin state
+
 3.0 (2016-01-25):
 
 - added: composer support
