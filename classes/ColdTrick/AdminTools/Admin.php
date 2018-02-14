@@ -69,11 +69,9 @@ class Admin {
 			'name' => 'switch_admin',
 			'text' => $text,
 			'icon' => 'refresh',
-			'href' => elgg_http_add_url_query_elements('action/admin_tools/toggle_admin', [
+			'href' => elgg_generate_action_url('admin_tools/toggle_admin', [
 				'user_guid' => $user->guid,
 			]),
-			'is_action' => true,
-			'is_trusted' => true,
 			'section' => 'alt',
 			'parent_name' => 'account',
 		]);
