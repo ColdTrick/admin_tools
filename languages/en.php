@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	'admin_tools:switch_to_user' => "Act as user",
 	'admin_tools:switch_to_admin' => "Act as admin",
@@ -11,5 +11,4 @@ return array(
 	// actions
 	'admin_tools:action:toggle_admin:success:user' => "You're now a normal user",
 	'admin_tools:action:toggle_admin:success:admin' => "You're now an admin again",
-	'' => "",
-);
+];

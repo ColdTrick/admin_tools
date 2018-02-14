@@ -14,4 +14,4 @@ $options = [
 
 $list = elgg_list_entities($options, 'elgg_get_entities_from_plugin_user_settings');
 
-echo elgg_view_module('inline', elgg_echo('admin_tools:switched_admins:title'), $list);
+echo elgg_view_module('info', elgg_echo('admin_tools:switched_admins:title'), $list);

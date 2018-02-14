@@ -23,7 +23,4 @@ function admin_tools_init() {
 	
 	// register plugin hooks
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '\ColdTrick\AdminTools\Admin::registerTopbar');
-	
-	// register actions
-	elgg_register_action('admin_tools/toggle_admin', dirname(__FILE__) . '/actions/toggle_admin.php');
 }

@@ -28,7 +28,7 @@ function admin_tools_is_admin_user(ElggUser $user = null) {
 	}
 	
 	// is user a hidden admin?
-	$setting = elgg_get_plugin_user_setting('switched_admin', $user->getGUID(), 'admin_tools');
+	$setting = elgg_get_plugin_user_setting('switched_admin', $user->guid, 'admin_tools');
 	if (empty($setting)) {
 		return false;
 	}
@@ -60,7 +60,11 @@ function admin_tools_make_switch_admin_secret(ElggUser $user = null) {
 		return false;
 	}
 	
-	return hash_hmac('sha256', $user->time_created, get_site_secret());
+	$hmac = elgg_build_hmac([
+		$user->time_created,
+	]);
+	
+	return $hmac->getToken();
 }
 
 /**
