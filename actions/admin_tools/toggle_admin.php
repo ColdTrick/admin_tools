@@ -22,16 +22,8 @@ if ($user->isAdmin()) {
 	$secret = admin_tools_make_switch_admin_secret($user);
 	if (!empty($secret)) {
 		
-		// temporarily disable security tools notifications
-		$unregister = elgg_unregister_event_handler('remove_admin', 'user', 'security_tools_remove_admin_handler');
-		
 		// remove the admin role from the user
 		$user->removeAdmin();
-		
-		// re-enable security tools
-		if ($unregister) {
-			elgg_register_event_handler('remove_admin', 'user', 'security_tools_remove_admin_handler');
-		}
 		
 		// store secret in order to be able to switch back
 		elgg_set_plugin_user_setting('switched_admin', $secret, $user->getGUID(), 'admin_tools');
