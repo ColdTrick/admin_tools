@@ -9,7 +9,4 @@ Admin Tools
  
 Offers different tools for admins / developers.
 
-1. Features
------------
-
-- switch off/on admin rights
+- adds menu item to switch off/on admin rights (for site admins)
