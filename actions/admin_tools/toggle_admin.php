@@ -17,6 +17,33 @@ if (!admin_tools_is_admin_user($user)) {
 	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
+// temporarily disable security notifications
+$prevent_notification = function(\Elgg\Hook $hook) use ($user) {
+	
+	if (!$hook->getValue()) {
+		// already prevented
+	}
+	
+	$object = $hook->getParam('object');
+	if (!$object instanceof ElggUser || $object->guid !== $user->guid) {
+		return;
+	}
+	
+	if (!in_array($hook->getParam('action'), ['make_admin', 'remove_admin'])) {
+		// not our event notification
+		return;
+	}
+	
+	return false;
+};
+
+elgg_register_plugin_hook_handler('enqueue', 'notification', $prevent_notification);
+
+// restore security notifications
+$restore_notifications = function() use (&$prevent_notification) {
+	elgg_unregister_plugin_hook_handler('enqueue', 'notification', $prevent_notification);
+};
+
 if ($user->isAdmin()) {
 	// make the user a normal user
 	$secret = admin_tools_make_switch_admin_secret($user);
@@ -25,28 +52,23 @@ if ($user->isAdmin()) {
 		// remove the admin role from the user
 		$user->removeAdmin();
 		
-		// store secret in order to be able to switch back
-		elgg_set_plugin_user_setting('switched_admin', $secret, $user->getGUID(), 'admin_tools');
+		$restore_notifications();
 		
-		return elgg_ok_response('', elgg_echo('admin_tools:action:toggle_admin:success:user'), REFERER);
+		// store secret in order to be able to switch back
+		elgg_set_plugin_user_setting('switched_admin', $secret, $user->guid, 'admin_tools');
+		
+		return elgg_ok_response('', elgg_echo('admin_tools:action:toggle_admin:success:user'));
 	}
 } else {
-	
-	// temporarily disable security tools notifications
-	$unregister = elgg_unregister_event_handler('make_admin', 'user', 'security_tools_make_admin_handler');
-	
 	// make the user an admin
 	$user->makeAdmin();
 	
-	// re-enable security tools
-	if ($unregister) {
-		elgg_register_event_handler('make_admin', 'user', 'security_tools_make_admin_handler');
-	}
+	$restore_notifications();
 	
 	// clear secret
-	elgg_unset_plugin_user_setting('switched_admin', $user->getGUID(), 'admin_tools');
+	elgg_unset_plugin_user_setting('switched_admin', $user->guid, 'admin_tools');
 	
-	return elgg_ok_response('', elgg_echo('admin_tools:action:toggle_admin:success:admin'), REFERER);
+	return elgg_ok_response('', elgg_echo('admin_tools:action:toggle_admin:success:admin'));
 }
 
 return elgg_error_response(elgg_echo('save:fail'));
