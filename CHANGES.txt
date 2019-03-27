@@ -1,6 +1,12 @@
 Version history
 ===============
 
+5.0 (2019-03-27):
+
+- changed: increased minimal Elgg version to 3.0
+- changed: rewrite for Elgg 3.0
+- fixed: no more notifications while switching admin role
+
 4.0 (2017-11-10):
 
 - changed: increased minimal Elgg version requirement
