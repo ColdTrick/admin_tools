@@ -9,4 +9,5 @@ Admin Tools
  
 Offers different tools for admins / developers.
 
-- adds menu item to switch off/on admin rights (for site admins)
+- adds account menu item to switch off/on admin rights (for site admins)
+- site admin function to bulk change text in all text columns in the database (GUI and CLI)
