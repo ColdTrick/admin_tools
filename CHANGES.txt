@@ -1,6 +1,11 @@
 Version history
 ===============
 
+5.1 (2019-11-11):
+
+- added: feature for bulk text changes in the database
+- fixed: make replacement likes use case insensitive query
+
 5.0 (2019-03-27):
 
 - changed: increased minimal Elgg version to 3.0
