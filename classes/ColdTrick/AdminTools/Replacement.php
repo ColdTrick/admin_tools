@@ -45,7 +45,7 @@ class Replacement {
 		$qb = Select::fromTable($table_name);
 		$qb->select('COUNT(*) AS total');
 		
-		$qb->where($qb->compare('value', 'like', "%{$this->from}%", ELGG_VALUE_STRING));
+		$qb->where($qb->compare('value', 'like', "%{$this->from}%", ELGG_VALUE_STRING, true));
 
 		$result = elgg()->db->getDataRow($qb);
 
@@ -56,7 +56,7 @@ class Replacement {
 		$qb = Update::table($table_name);
 		$qb->set('value', "replace(value, '{$this->from}', '{$this->to}')");
 		
-		$qb->where($qb->compare('value', 'like', "%{$this->from}%", ELGG_VALUE_STRING));
+		$qb->where($qb->compare('value', 'like', "%{$this->from}%", ELGG_VALUE_STRING, true));
 
 		return elgg()->db->updateData($qb, true);
 	}
