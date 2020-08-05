@@ -1,10 +1,13 @@
 <?php
 /**
- * This file was created by Translation Editor v7.0.4
- * On 2019-11-01 13:50
+ * This file was created by Translation Editor v8.0
+ * On 2020-08-05 15:02
  */
 
 return array (
+  'admin_tools:change_text:export:extended' => 'Exporteer uitgebreide data',
+  'admin_tools:change_text:export' => 'De exports maken een CSV bestand met alle relevante data.
+Voor meer informatie gebruik de uitgebreide export actie, houdt er echter rekening mee dat dit kan mislukken bij grote datasets.',
   'admin:administer_utilities:change_text' => 'Tekst wijzigen',
   'admin_tools:change_text:warning' => 'Deze functie zal de opgegeven tekst in alle tekstkolommen in de database vervangen. Het gebruikt directe database queries en daardoor worden er geen systeem events getriggerd om te vertellen dat inhoud is gewijzigd. Het is dus mogelijk noodzakelijk om aanvullende acties te doen zoals het wissen van de cache of het herindexeren van een zoekmachine. Er is geen mogelijkheid om deze wijziging ongedaan te maken, dus zorg voor een backup.',
   'admin_tools:change_text:change' => 'Verander',
