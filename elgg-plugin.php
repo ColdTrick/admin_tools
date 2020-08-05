@@ -9,5 +9,7 @@ return [
 	'actions' => [
 		'admin_tools/toggle_admin' => [],
 		'admin_tools/change_text' => ['access' => 'admin'],
+		'admin_tools/change_text/export' => ['access' => 'admin'],
+		'admin_tools/change_text/export_extended' => ['access' => 'admin'],
 	],
 ];

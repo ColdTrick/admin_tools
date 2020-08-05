@@ -9,6 +9,10 @@ return [
 	You might need to perform additional actions like flushing the cache or reindexing a search engine to make sure other parts of the system are aware of the changes.
 	There is no way to revert these specific changes, so make sure you have a backup.",
 	
+	'admin_tools:change_text:export' => "The exports will create a CSV file with all relevant data.
+For more information use the extended export feature however keep in mind this could fail on large datasets.",
+	'admin_tools:change_text:export:extended' => "Export extended data",
+	
 	'admin_tools:change_text:change' => "Change",
 	'admin_tools:change_text:into' => "into",
 	'admin_tools:change_text:preview' => "Found '%s' in",
