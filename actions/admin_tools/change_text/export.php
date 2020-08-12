@@ -43,7 +43,7 @@ fputcsv($fh, [
 foreach ($results as $row) {
 	$entity_url = '';
 	if ($row->guid > 0) {
-		elgg_generate_url("view:{$row->type}:{$row->subtype}", [
+		$entity_url = elgg_generate_url("view:{$row->type}:{$row->subtype}", [
 			'guid' => (int) $row->guid,
 		]) ?: '';
 	}
