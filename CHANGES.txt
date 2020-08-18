@@ -1,6 +1,10 @@
 Version history
 ===============
 
+5.2 (2020-08-18):
+
+- added: text replacement csv export
+
 5.1 (2019-11-11):
 
 - added: feature for bulk text changes in the database
