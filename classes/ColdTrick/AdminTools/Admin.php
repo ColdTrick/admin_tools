@@ -14,11 +14,11 @@ class Admin {
 	public static function makeAdmin(\Elgg\Event $event) {
 		
 		$entity = $event->getObject();
-		if (!($entity instanceof \ElggUser)) {
+		if (!$entity instanceof \ElggUser) {
 			return;
 		}
 		
-		elgg_unset_plugin_user_setting('switched_admin', $entity->guid, 'admin_tools');
+		$entity->removePluginSetting('admin_tools', 'switched_admin');
 	}
 	
 	/**
@@ -31,11 +31,11 @@ class Admin {
 	public static function removeAdmin(\Elgg\Event $event) {
 		
 		$entity = $event->getObject();
-		if (!($entity instanceof \ElggUser)) {
+		if (!$entity instanceof \ElggUser) {
 			return;
 		}
 		
-		elgg_unset_plugin_user_setting('switched_admin', $entity->guid, 'admin_tools');
+		$entity->removePluginSetting('admin_tools', 'switched_admin');
 	}
 	
 	/**

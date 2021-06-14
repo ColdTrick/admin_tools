@@ -3,15 +3,12 @@
  * Show a list of the admin's who switched to normal user
  */
 
-$options = [
+$list = elgg_list_entities([
 	'type' => 'user',
 	'limit' => false,
-	'plugin_id' => 'admin_tools',
-	'plugin_user_setting_name' => 'switched_admin',
+	'private_setting_names' => 'plugin:user_setting:admin_tools:switched_admin',
 	'pagination' => false,
 	'no_results' => elgg_echo('admin_tools:switched_admins:none'),
-];
-
-$list = elgg_list_entities($options, 'elgg_get_entities_from_plugin_user_settings');
+]);
 
 echo elgg_view_module('info', elgg_echo('admin_tools:switched_admins:title'), $list);

@@ -55,7 +55,7 @@ if ($user->isAdmin()) {
 		$restore_notifications();
 		
 		// store secret in order to be able to switch back
-		elgg_set_plugin_user_setting('switched_admin', $secret, $user->guid, 'admin_tools');
+		$user->setPluginSetting('admin_tools', 'switched_admin', $secret);
 		
 		return elgg_ok_response('', elgg_echo('admin_tools:action:toggle_admin:success:user'));
 	}
@@ -66,7 +66,7 @@ if ($user->isAdmin()) {
 	$restore_notifications();
 	
 	// clear secret
-	elgg_unset_plugin_user_setting('switched_admin', $user->guid, 'admin_tools');
+	$user->removePluginSetting('admin_tools', 'switched_admin');
 	
 	return elgg_ok_response('', elgg_echo('admin_tools:action:toggle_admin:success:admin'));
 }

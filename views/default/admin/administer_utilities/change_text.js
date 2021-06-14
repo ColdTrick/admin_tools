@@ -1,7 +1,4 @@
-define(function (require) {
-
-	var $ = require('jquery');
-	var Ajax = require('elgg/Ajax');
+define(['jquery', 'elgg/Ajax'], function ($, Ajax) {
 
 	$(document).on('click', '#change-text-preview-button', function () {
 		var $change_text_form = $('.elgg-form-admin-tools-change-text');

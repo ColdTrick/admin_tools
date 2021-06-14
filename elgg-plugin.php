@@ -5,6 +5,9 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 use ColdTrick\AdminTools\Bootstrap;
 
 return [
+	'plugin' => [
+		'version' => '5.2',
+	],
 	'bootstrap' => Bootstrap::class,
 	'actions' => [
 		'admin_tools/toggle_admin' => [],

@@ -18,7 +18,7 @@ function admin_tools_is_admin_user(ElggUser $user = null) {
 	}
 	
 	// no user to check
-	if (!($user instanceof ElggUser)) {
+	if (!$user instanceof ElggUser) {
 		return false;
 	}
 	
@@ -28,7 +28,7 @@ function admin_tools_is_admin_user(ElggUser $user = null) {
 	}
 	
 	// is user a hidden admin?
-	$setting = elgg_get_plugin_user_setting('switched_admin', $user->guid, 'admin_tools');
+	$setting = $user->getPluginSetting('admin_tools', 'switched_admin');
 	if (empty($setting)) {
 		return false;
 	}
@@ -56,15 +56,13 @@ function admin_tools_make_switch_admin_secret(ElggUser $user = null) {
 	}
 	
 	// no user to check
-	if (!($user instanceof ElggUser)) {
+	if (!$user instanceof ElggUser) {
 		return false;
 	}
 	
-	$hmac = elgg_build_hmac([
+	return elgg_build_hmac([
 		$user->time_created,
-	]);
-	
-	return $hmac->getToken();
+	])->getToken();
 }
 
 /**
@@ -87,11 +85,9 @@ function admin_tools_validate_switch_admin_secret($secret, ElggUser $user = null
 	}
 	
 	// no user to check
-	if (!($user instanceof ElggUser)) {
+	if (!$user instanceof ElggUser) {
 		return false;
 	}
 	
-	$correct_secret = admin_tools_make_switch_admin_secret($user);
-	
-	return ($correct_secret === $secret);
+	return admin_tools_make_switch_admin_secret($user) === $secret;
 }
