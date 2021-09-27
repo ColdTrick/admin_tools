@@ -1,6 +1,11 @@
 Version history
 ===============
 
+6.0 (2021-09-27):
+
+- added: French translation
+- changed: updated for Elgg 4
+
 5.2 (2020-08-18):
 
 - added: text replacement csv export
