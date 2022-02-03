@@ -4,6 +4,9 @@ use ColdTrick\AdminTools\Replacement;
 
 $from = get_input('from');
 $to = get_input('to');
+if (elgg_is_empty($from) || elgg_is_empty($to)) {
+	return elgg_error_response(elgg_echo('error:missing_data'));
+}
 
 $replacement = new Replacement($from, $to);
 
