@@ -6,7 +6,7 @@ use ColdTrick\AdminTools\Bootstrap;
 
 return [
 	'plugin' => [
-		'version' => '6.0.1',
+		'version' => '6.0.2',
 	],
 	'bootstrap' => Bootstrap::class,
 	'actions' => [
