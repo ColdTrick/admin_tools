@@ -31,5 +31,14 @@ class Bootstrap extends DefaultPluginBootstrap {
 			'parent_name' => 'administer_utilities',
 			'section' => 'administer',
 		]);
+
+		elgg_register_menu_item('page', [
+			'name' => 'administer_utilities:deadlinks',
+			'text' => elgg_echo('admin:administer_utilities:deadlinks'),
+			'href' => 'admin/administer_utilities/deadlinks',
+			'context' => 'admin',
+			'parent_name' => 'administer_utilities',
+			'section' => 'administer',
+		]);
 	}
 }

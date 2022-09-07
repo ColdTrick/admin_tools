@@ -15,4 +15,13 @@ return [
 		'admin_tools/change_text/export' => ['access' => 'admin'],
 		'admin_tools/change_text/export_extended' => ['access' => 'admin'],
 	],
+	'routes' => [
+		'deadlinks:redirect' => [
+			'path' => '/deadlinks/redirect/{guid}',
+			'controller' => \ColdTrick\AdminTools\DeadLinksRedirector::class,
+			'middleware' => [
+				\Elgg\Router\Middleware\AdminGatekeeper::class,
+			],
+		],
+	],
 ];

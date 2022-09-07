@@ -3,6 +3,7 @@
 return [
 
 	'admin:administer_utilities:change_text' => "Change Text",
+	'admin:administer_utilities:deadlinks' => "Dead Links",
 	
 	'admin_tools:change_text:warning' => "This function will change all occurences of the given text in all text columns of the database tables.
 	It will use direct queries so there will be no system events that the data has been changed.
