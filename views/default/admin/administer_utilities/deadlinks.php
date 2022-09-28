@@ -1,176 +1,122 @@
 <?php
 
-use Elgg\Database\Select;
+use Elgg\Project\Paths;
 
-$selected_types = get_input('types');
-$available_types = [];
-$limit = (int) get_input('limit', 1000);
-$offset = (int) get_input('offset', 0);
-$domain = get_input('domain');
+$plugin = elgg_get_plugin_from_id('admin_tools');
+$subdirectory = get_input('dir');
+$subdirectory = $subdirectory ? Paths::sanitize($subdirectory) : null;
 
-$pattern = '~(?xi)
-              (?:
-                ((ht|f)tps?://)                      # scheme://
-                |                                    #   or
-                www\d{0,3}\.                         # "www.", "www1.", "www2." ... "www999."
-                |                                    #   or
-                www\-                                # "www-"
-                |                                    #   or
-                [a-z0-9.\-]+\.[a-z]{2,4}(?=/)        # looks like domain name followed by a slash
-              )
-              (?:                                    # Zero or more:
-                [^\s()<>]+                           # Run of non-space, non-()<>
-                |                                    #   or
-                \((?>[^\s()<>]+|(\([^\s()<>]+\)))*\) # balanced parens, up to 2 levels
-              )*
-              (?:                                    # End with:
-                \((?>[^\s()<>]+|(\([^\s()<>]+\)))*\) # balanced parens, up to 2 levels
-                |                                    #   or
-                [^\s`!\-()\[\]{};:\'".,<>?Â«Â»â€œâ€�â€˜â€™]    # not a space or one of these punct chars
-              )
-        ~u';
-
-set_time_limit(0);
-
-// base query
-$select = Select::fromTable('metadata', 'main');
-$select->joinEntitiesTable('main', 'entity_guid', 'left', 'e');
-
-if (empty($domain)) {
-	$select->where($select->compare('value', 'like', "%http://%", ELGG_VALUE_STRING, false));
-	$select->orWhere($select->compare('value', 'like', "%https://%", ELGG_VALUE_STRING, false));
-} else {
-	$select->where($select->compare('value', 'like', "%http://{$domain}%", ELGG_VALUE_STRING, false));
-	$select->orWhere($select->compare('value', 'like', "%https://{$domain}%", ELGG_VALUE_STRING, false));
+// add a breadcrumb to navigate back
+$breadcrumb = [];
+$breadcrumb[] = \ElggMenuItem::factory([
+	'name' => 'root',
+	'text' => elgg_echo('admin:administer_utilities:deadlinks'),
+	'href' => 'admin/administer_utilities/deadlinks',
+]);
+if (!empty($subdirectory)) {
+	$parts = explode('/', trim($subdirectory, '/'));
+	$sub = '';
+	foreach ($parts as $part) {
+		$breadcrumb[] = \ElggMenuItem::factory([
+			'name' => $sub . $part,
+			'text' => $part,
+			'href' => elgg_http_add_url_query_elements('admin/administer_utilities/deadlinks', [
+				'dir' => $sub . $part,
+			]),
+		]);
+		
+		$sub .= "{$part}/";
+	}
 }
 
-$select->andWhere($select->compare('name', '=', 'description', ELGG_VALUE_STRING, false));
-$select->andWhere($select->compare('e.enabled', '=', 'yes', ELGG_VALUE_STRING, false));
-$select->andWhere($select->compare('e.access_id', '<>', ACCESS_PRIVATE, ELGG_VALUE_INTEGER));
-
-// grouped
-if (empty($selected_types)) {
-	$select_counts = clone $select;
-	$select_counts->select('e.type')->addSelect('e.subtype')->addSelect('count(*) as total');
-	
-	$select_counts->groupBy('e.type')->addGroupBy('e.subtype');
-	
-	$available_results = elgg()->db->getData($select_counts);
-	foreach ($available_results as $row) {
-		$available_types["{$row->type}.{$row->subtype}"] = elgg_echo("item:{$row->type}:{$row->subtype}") . " ({$row->total})";
-	}
-	
-	if (empty($available_types)) {
-		echo elgg_echo('notfound');
-		return;
-	}
-} else {
-	list($type, $subtype) = explode('.', $selected_types);
-	$available_types[$selected_types] = elgg_echo("item:{$type}:{$subtype}");
-}
-
-
-// form
-echo elgg_view_form('admin_tools/deadlinks', [
-	'action' => 'admin/administer_utilities/deadlinks',
-	'method' => 'GET',
-	'class' => 'mbl',
-], [
-	'types' => $available_types,
-	'selected_types' => $selected_types,
+echo elgg_view_menu('admin_tools:deadlinks', [
+	'items' => $breadcrumb,
+	'class' => [
+		'elgg-menu-hz',
+		'elgg-breadcrumbs',
+	],
 ]);
 
-if (empty($selected_types)) {
+// start listing directories and files
+$file = new \ElggFile();
+$file->owner_guid = $plugin->guid;
+$file->setFilename('deadlinks/dummy.log');
+
+$directory_name = str_ireplace('dummy.log', '', $file->getFilenameOnFilestore());
+$directory_name = Paths::sanitize($directory_name . $subdirectory);
+if (!is_dir($directory_name)) {
+	echo elgg_view('page/components/no_results', [
+		'no_results' => true,
+	]);
 	return;
 }
 
-// listing
-$fetch_status_code = function ($url) {
-	// create a new cURL resource
-	$ch = curl_init();
+// separate files and directories
+$files = [];
+$dirs = [];
+$dh = new \DirectoryIterator($directory_name);
+foreach ($dh as $fileinfo) {
+	$filename = $fileinfo->getFilename();
 	
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-	
-	// This changes the request method to HEAD
-	curl_setopt($ch, CURLOPT_NOBODY, true);
-	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // connect timeout
-	curl_setopt($ch, CURLOPT_TIMEOUT, 10); // curl timeout
-	curl_setopt($ch, CURLOPT_URL, $url);
-
-	$result = curl_exec($ch) ? curl_getinfo($ch, CURLINFO_HTTP_CODE) : 0;
-	
-	curl_close($ch);
-	
-	return $result;
-};
-
-list($type, $subtype) = explode('.', $selected_types);
-
-$qb = clone $select;
-$qb->select('main.value')->addSelect('main.entity_guid');
-
-$qb->andWhere($qb->compare('e.type', '=', $type, ELGG_VALUE_STRING));
-$qb->andWhere($qb->compare('e.subtype', '=', $subtype, ELGG_VALUE_STRING));
-
-$count_select = clone $qb;
-$count_select->select('count(*) as total');
-$count_results = elgg()->db->getDataRow($count_select);
-$count = $count_results->total;
-
-$qb->setFirstResult($offset);
-$qb->setMaxResults($limit);
-
-$results = elgg()->db->getData($qb);
-
-$links = [];
-foreach ($results as $result) {
-	$matches = [];
-	preg_match_all($pattern, $result->value, $matches);
-	$matches = array_unique($matches[0]);
-
-	foreach ($matches as $match) {
-		if (!empty($domain) && !stristr($match, $domain)) {
-			continue;
-		}
-		
-		if (!isset($links[$match])) {
-			$links[$match] = [];
-		}
-		
-		if (in_array($result->entity_guid, $links[$match])) {
-			continue;
-		}
-		
-		$links[$match][] = $result->entity_guid;
-	}
-}
-
-$table = '<table class="elgg-table">';
-$table .= '<thead><tr><th>link</th><th>status</th><th>content</th></tr></thead>';
-ksort($links);
-foreach ($links as $link => $guids) {
-	$code = $fetch_status_code($link);
-	if ($code === 200) {
+	if ($fileinfo->isDot()) {
 		continue;
+	} elseif ($fileinfo->isDir()) {
+		$row = [];
+		$row[] = elgg_format_element('td', [], elgg_view_url(elgg_http_add_url_query_elements('admin/administer_utilities/deadlinks', [
+			'dir' => Paths::sanitize($subdirectory . $filename),
+		]), $filename, [
+			'icon' => 'folder',
+		]));
+		$row[] = elgg_format_element('td', [], date(elgg_echo('friendlytime:date_format'), $fileinfo->getMTime()));
+		$row[] = elgg_format_element('td', [], '&nbsp;'); // size
+		$row[] = elgg_format_element('td', ['class' => 'center'], elgg_view_url(elgg_generate_action_url('admin_tools/deadlinks/delete', [
+			'dir' => $subdirectory . $filename,
+		]), false, [
+			'icon' => 'delete',
+			'title' => elgg_echo('delete'),
+			'confirm' => elgg_echo('deleteconfirm'),
+		]));
+		
+		$dirs[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
+	} elseif ($fileinfo->isFile()) {
+		// make a download link
+		$tmp = new \ElggFile();
+		$tmp->owner_guid = $plugin->guid;
+		$tmp->setFilename('deadlinks/' . $subdirectory . $filename);
+		
+		$row = [];
+		$row[] = elgg_format_element('td', [], elgg_view_url($tmp->getDownloadURL(), $filename, [
+			'icon' => 'file-regular',
+		]));
+		$row[] = elgg_format_element('td', [], date(elgg_echo('friendlytime:date_format'), $fileinfo->getMTime()));
+		$row[] = elgg_format_element('td', [], $fileinfo->getSize() ? elgg_format_bytes($fileinfo->getSize()) : 0);
+		$row[] = elgg_format_element('td', ['class' => 'center'], elgg_view_url(elgg_generate_action_url('admin_tools/deadlinks/delete', [
+			'filename' => $subdirectory . $filename,
+		]), false, [
+			'icon' => 'delete',
+			'title' => elgg_echo('delete'),
+			'confirm' => elgg_echo('deleteconfirm'),
+		]));
+		
+		$files[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
 	}
-	
-	$table .= '<tr>';
-	$table .= '<td>' . $link . '</td>';
-	$table .= '<td>' . $code . '</td>';
-	$table .= '<td>';
-	foreach ($guids as $guid) {
-		$table .= elgg_view_url(elgg_generate_url('deadlinks:redirect', ['guid' => $guid]), $guid) . '<br />';
-	}
-	$table .= '</td>';
-	$table .= '</tr>';
 }
-$table .= '</table>';
 
-$table .= elgg_view('navigation/pagination', [
-	'count' => $count,
-	'limit' => $limit,
-	'offset' => $offset,
-]);
+if (empty($files) && empty($dirs)) {
+	echo elgg_view('page/components/no_results', [
+		'no_results' => true,
+	]);
+	return;
+}
 
-echo elgg_view_module('info', 'results (' . count($links) . ' urls scanned)', $table);
+$header = [
+	elgg_format_element('th', [], elgg_echo('table_columns:fromProperty:name')),
+	elgg_format_element('th', [], elgg_echo('table_columns:fromView:time_updated')),
+	elgg_format_element('th', [], elgg_echo('admin_tools:deadlinks:size')),
+	elgg_format_element('th', ['class' => 'center'], elgg_echo('delete')),
+];
+
+$header = elgg_format_element('tr', [], implode(PHP_EOL, $header));
+$header = elgg_format_element('thead', [], $header);
+
+echo elgg_format_element('table', ['class' => 'elgg-table-alt'], $header . implode(PHP_EOL, $dirs) . implode(PHP_EOL, $files));

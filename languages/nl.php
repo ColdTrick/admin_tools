@@ -1,10 +1,32 @@
 <?php
 /**
- * This file was created by Translation Editor v8.0
- * On 2020-08-05 15:02
+ * This file was created by Translation Editor v11.0
+ * On 2022-09-28 15:15
  */
 
 return array (
+  'admin:administer_utilities:deadlinks' => 'Dode Links',
+  'admin_tools:settings:deadlink:title' => 'Dode link detectie instellingen',
+  'admin_tools:settings:deadlink:enabled' => 'Hoe vaak moeten dode links worden gedetecteerd',
+  'admin_tools:settings:deadlink:created_before' => 'Negeer content aangemaakt is de laatste x dagen',
+  'admin_tools:settings:deadlink:rescan' => 'Herhaal de detectie na x dagen',
+  'admin_tools:settings:deadlink:skipped_domains' => 'Sla de volgende domeinen over tijdens het detecteren van dode links',
+  'admin_tools:settings:deadlink:skipped_domains:help' => 'Een komma gescheiden lijst van domeinen om over te slaan.',
+  'admin_tools:settings:deadlink:report_email' => 'Stuur een additioneel rapport na het volgende e-mail adres',
+  'admin_tools:settings:deadlink:report_email:help' => 'Standaard ontvangen de site beheerders een rapport.',
+  'admin_tools:settings:deadlink:type_subtype' => 'Bij welke content types moet er worden gecontroleerd op dode links',
+  'admin_tools:deadlinks:size' => 'Grootte',
+  'admin_tools:notification:deadlinks:setting' => 'Ontvang een notificatie als er dode links worden gevonden in content',
+  'admin_tools:notification:deadlinks:subject' => 'Nieuwe dode links gevonden in content',
+  'admin_tools:notification:deadlinks:summary' => 'Nieuwe dode links gevonden in content',
+  'admin_tools:notification:deadlinks:body' => 'De controle op nieuwe dode links in de content heeft ^%d nieuwe dode links opgeleverd.
+
+Het resultaat is hier te bekijken:
+%s',
+  'admin_tools:action:deadlink:delete:not_exists' => 'Het bestand of de map bestaat niet',
+  'admin_tools:action:deadlink:delete:fail' => 'Er is een fout opgetreden tijdens het verwijderen van het bestand of de map',
+  'admin_tools:action:deadlink:delete:success:directory' => 'De map \'%s\' is succesvol verwijderd',
+  'admin_tools:action:deadlink:delete:success:file' => 'Het bestand \'%s\' is succesvol verwijderd',
   'admin_tools:change_text:export:extended' => 'Exporteer uitgebreide data',
   'admin_tools:change_text:export' => 'De exports maken een CSV bestand met alle relevante data.
 Voor meer informatie gebruik de uitgebreide export actie, houdt er echter rekening mee dat dit kan mislukken bij grote datasets.',
