@@ -216,7 +216,6 @@ class Cron {
 			});
 		} catch (\Error $e) {
 			_elgg_services()->queryCache->enable();
-			elgg_log($e, 'ERROR');
 			throw $e;
 		}
 		
@@ -235,7 +234,9 @@ class Cron {
 	 */
 	protected static function checkURLStatus(string $url) {
 		$host = parse_url($url, PHP_URL_HOST);
-		if (self::isSkippedDomain($host)) {
+		if (empty($host)) {
+			return null;
+		} elseif (self::isSkippedDomain($host)) {
 			return 'skipped';
 		}
 		
