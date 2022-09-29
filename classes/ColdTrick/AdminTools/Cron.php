@@ -308,15 +308,8 @@ class Cron {
 			'dir' => $path,
 		]));
 		
-		$subject = elgg_echo('admin_tools:notification:deadlinks:subject');
-		$summary = elgg_echo('admin_tools:notification:deadlinks:summary');
-		$body = elgg_echo('admin_tools:notification:deadlinks:body', [
-			$deadlinks,
-			$url,
-		]);
 		$notification_params = [
 			'action' => 'admin_tools:deadlinks',
-			'summary' => $summary,
 			'url' => $url,
 		];
 		
@@ -337,11 +330,27 @@ class Cron {
 				continue;
 			}
 			
+			$subject = elgg_echo('admin_tools:notification:deadlinks:subject', [], $user->language);
+			$summary = elgg_echo('admin_tools:notification:deadlinks:summary', [], $user->language);
+			$body = elgg_echo('admin_tools:notification:deadlinks:body', [
+				$deadlinks,
+				$url,
+			], $user->language);
+			$notification_params['summary'] = $summary;
+			
 			notify_user($user->guid, 0, $subject, $body, $notification_params, $methods);
 		}
 		
 		$email = elgg_get_plugin_setting('deadlink_report_email', 'admin_tools');
 		if (!empty($email) && elgg_is_valid_email($email)) {
+			$subject = elgg_echo('admin_tools:notification:deadlinks:subject');
+			$summary = elgg_echo('admin_tools:notification:deadlinks:summary');
+			$body = elgg_echo('admin_tools:notification:deadlinks:body', [
+				$deadlinks,
+				$url,
+			]);
+			$notification_params['summary'] = $summary;
+			
 			elgg_send_email(Email::factory([
 				'to' => $email,
 				'subject' => $subject,
