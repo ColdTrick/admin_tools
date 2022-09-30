@@ -138,7 +138,9 @@ class Cron {
 				$fh = $file->open('write');
 				fputcsv($fh, [
 					'URL',
+					'Host',
 					'Entity URL',
+					'Entity time updated',
 					'Owner name',
 					'Owner URL',
 					'Owner e-mail',
@@ -152,7 +154,7 @@ class Cron {
 				$batch = elgg_get_metadata($options);
 				/* @var $metadata \ElggMetadata */
 				foreach ($batch as $metadata) {
-					if (($start - microtime(true)) > $max_runtime) {
+					if ((microtime(true) - $start) > $max_runtime) {
 						break;
 					}
 					
@@ -172,6 +174,11 @@ class Cron {
 						throw new UnexpectedValueException("The 'deadlink_owner', 'admin_tools' hook should return an \ElggEntity");
 					}
 					foreach ($urls as $url) {
+						$host = parse_url($url, PHP_URL_HOST);
+						if (empty($host)) {
+							continue;
+						}
+						
 						$status = self::checkURLStatus($url);
 						if ($status === 200) {
 							// all OK
@@ -188,7 +195,9 @@ class Cron {
 						
 						fputcsv($fh, [
 							$url,
+							$host,
 							$entity->getURL(),
+							date(DATE_ISO8601, $entity->time_updated),
 							$owner->getDisplayName(),
 							$owner->getURL(),
 							$owner->email,
