@@ -71,11 +71,17 @@ class Cron {
 			'batch_inc_offset' => false,
 			'wheres' => [
 				function(QueryBuilder $qb, $main_alias) {
+					// must contain a link
 					return $qb->merge([
 						$qb->compare("{$main_alias}.value", 'LIKE', '%http://%', ELGG_VALUE_STRING),
 						$qb->compare("{$main_alias}.value", 'LIKE', '%https://%', ELGG_VALUE_STRING),
 					], 'OR');
 				},
+				function(QueryBuilder $qb, $main_alias) {
+					// no private content
+					$e = $qb->joinEntitiesTable($main_alias, 'entity_guid');
+					return $qb->compare("{$e}.access_id", '!=', ACCESS_PRIVATE, ELGG_VALUE_INTEGER);
+				}
 			],
 			'sort_by' => [
 				'property' => 'time_created',
