@@ -19,7 +19,7 @@ return array (
   'admin_tools:notification:deadlinks:setting' => 'Ontvang een notificatie als er dode links worden gevonden in content',
   'admin_tools:notification:deadlinks:subject' => 'Nieuwe dode links gevonden in content',
   'admin_tools:notification:deadlinks:summary' => 'Nieuwe dode links gevonden in content',
-  'admin_tools:notification:deadlinks:body' => 'De controle op nieuwe dode links in de content heeft ^%d nieuwe dode links opgeleverd.
+  'admin_tools:notification:deadlinks:body' => 'De controle op nieuwe dode links in de content heeft %d nieuwe dode links opgeleverd.
 
 Het resultaat is hier te bekijken:
 %s',
