@@ -1,10 +1,12 @@
 <?php
 /**
  * This file was created by Translation Editor v11.0
- * On 2022-09-28 15:15
+ * On 2022-10-04 13:11
  */
 
 return array (
+  'admin_tools:settings:deadlink:include_skipped_domains' => 'Neem de overgeslagen domeinen op in het CSV-bestand',
+  'admin_tools:settings:deadlink:include_success_results' => 'Neem de succesvolle resultaten op in het CSV-bestand',
   'admin:administer_utilities:deadlinks' => 'Dode Links',
   'admin_tools:settings:deadlink:title' => 'Dode link detectie instellingen',
   'admin_tools:settings:deadlink:enabled' => 'Hoe vaak moeten dode links worden gedetecteerd',

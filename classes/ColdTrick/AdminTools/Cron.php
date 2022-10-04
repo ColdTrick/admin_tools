@@ -185,19 +185,28 @@ class Cron {
 							continue;
 						}
 						
+						$log_result = true;
 						$status = self::checkURLStatus($url);
-						if ($status === 200) {
-							// all OK
-							continue;
-						}
-						
-						$links_logged++;
 						switch ($status) {
+							case ELGG_HTTP_OK:
+								// link still works
+								$log_result = (bool) $plugin->deadlink_include_success_results;
+								break;
+							case 'skipped':
+								// host was in a skipped domain
+								$log_result = (bool) $plugin->deadlink_include_skipped_domains;
+								break;
 							case ELGG_HTTP_NOT_FOUND:
 							case 0: // unable to resolve host
 								$deadlinks_found++;
 								break;
 						}
+						
+						if (!$log_result) {
+							continue;
+						}
+						
+						$links_logged++;
 						
 						fputcsv($fh, [
 							$url,
@@ -294,7 +303,7 @@ class Cron {
 					$pattern .= preg_quote($domain) . '|';
 				}
 				$pattern = trim($pattern, '|');
-				$pattern = '/\W(?>' . $pattern . ')$/';
+				$pattern = '/(?>^|\W)?(?>' . $pattern . ')$/';
 			}
 		}
 		

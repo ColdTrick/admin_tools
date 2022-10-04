@@ -8,6 +8,9 @@ return [
 	'plugin' => [
 		'version' => '6.0.2',
 	],
+	'settings' => [
+		'deadlink_include_skipped_domains' => 1,
+	],
 	'bootstrap' => Bootstrap::class,
 	'actions' => [
 		'admin_tools/toggle_admin' => [],

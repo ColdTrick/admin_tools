@@ -42,6 +42,24 @@ $deadlink .= elgg_view_field([
 ]);
 
 $deadlink .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('admin_tools:settings:deadlink:include_skipped_domains'),
+	'name' => 'params[deadlink_include_skipped_domains]',
+	'value' => 1,
+	'checked' => (bool) $plugin->deadlink_include_skipped_domains,
+	'switch' => true,
+]);
+
+$deadlink .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('admin_tools:settings:deadlink:include_success_results'),
+	'name' => 'params[deadlink_include_success_results]',
+	'value' => 1,
+	'checked' => (bool) $plugin->deadlink_include_success_results,
+	'switch' => true,
+]);
+
+$deadlink .= elgg_view_field([
 	'#type' => 'email',
 	'#label' => elgg_echo('admin_tools:settings:deadlink:report_email'),
 	'#help' => elgg_echo('admin_tools:settings:deadlink:report_email:help'),

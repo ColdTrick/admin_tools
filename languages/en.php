@@ -13,6 +13,8 @@ return [
 	'admin_tools:settings:deadlink:rescan' => "Rescan content after x days",
 	'admin_tools:settings:deadlink:skipped_domains' => "Skip the following domains while checking for dead links",
 	'admin_tools:settings:deadlink:skipped_domains:help' => "A comma separated list of domains to skip.",
+	'admin_tools:settings:deadlink:include_skipped_domains' => "Include the skipped domains in de CSV-file",
+	'admin_tools:settings:deadlink:include_success_results' => "Include successfull results in the CSV-file",
 	'admin_tools:settings:deadlink:report_email' => "Send an additional report to the following e-mail address",
 	'admin_tools:settings:deadlink:report_email:help' => "By default the site admins will receive a report.",
 	'admin_tools:settings:deadlink:type_subtype' => "Content types to scan for dead links",
