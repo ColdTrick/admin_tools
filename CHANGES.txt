@@ -1,6 +1,11 @@
 Version history
 ===============
 
+6.1 (2022-10-07):
+
+- added: admin page that shows deadlinks in descriptions
+- added: cron based dead link detection
+
 6.0.2 (2022-07-12):
 
 - several small chores/fixes

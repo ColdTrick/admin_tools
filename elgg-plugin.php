@@ -6,7 +6,7 @@ use ColdTrick\AdminTools\Bootstrap;
 
 return [
 	'plugin' => [
-		'version' => '6.0.2',
+		'version' => '6.1',
 	],
 	'settings' => [
 		'deadlink_include_skipped_domains' => 1,
