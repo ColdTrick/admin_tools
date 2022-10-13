@@ -77,7 +77,7 @@ foreach ($dh as $fileinfo) {
 			'confirm' => elgg_echo('deleteconfirm'),
 		]));
 		
-		$dirs[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
+		$dirs[$filename] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
 	} elseif ($fileinfo->isFile()) {
 		// make a download link
 		$tmp = new \ElggFile();
@@ -98,7 +98,7 @@ foreach ($dh as $fileinfo) {
 			'confirm' => elgg_echo('deleteconfirm'),
 		]));
 		
-		$files[] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
+		$files[$filename] = elgg_format_element('tr', [], implode(PHP_EOL, $row));
 	}
 }
 
@@ -108,6 +108,10 @@ if (empty($files) && empty($dirs)) {
 	]);
 	return;
 }
+
+// sort dirs and files
+uksort($dirs, 'strnatcasecmp');
+uksort($files, 'strnatcasecmp');
 
 $header = [
 	elgg_format_element('th', [], elgg_echo('table_columns:fromProperty:name')),
