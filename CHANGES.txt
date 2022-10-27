@@ -1,6 +1,10 @@
 Version history
 ===============
 
+6.1.1 (2022-10-27):
+
+- fixed: sorting of files/directories
+
 6.1 (2022-10-07):
 
 - added: admin page that shows deadlinks in descriptions
