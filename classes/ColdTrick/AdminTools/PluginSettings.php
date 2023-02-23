@@ -2,21 +2,24 @@
 
 namespace ColdTrick\AdminTools;
 
+/**
+ * Modify plugin settings
+ */
 class PluginSettings {
 	
 	/**
 	 * Change the value of some plugin settings before saving
 	 *
-	 * @param \Elgg\Hook $hook 'setting', 'plugin'
+	 * @param \Elgg\Event $event 'setting', 'plugin'
 	 *
 	 * @return null|string
 	 */
-	public static function save(\Elgg\Hook $hook): ?string {
-		if ($hook->getParam('plugin_id') !== 'admin_tools') {
+	public static function save(\Elgg\Event $event): ?string {
+		if ($event->getParam('plugin_id') !== 'admin_tools') {
 			return null;
 		}
 		
-		$value = $hook->getValue();
+		$value = $event->getValue();
 		if (is_array($value)) {
 			return json_encode($value);
 		}

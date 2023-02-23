@@ -18,18 +18,18 @@ if (!admin_tools_is_admin_user($user)) {
 }
 
 // temporarily disable security notifications
-$prevent_notification = function(\Elgg\Hook $hook) use ($user) {
-	
-	if (!$hook->getValue()) {
+$prevent_notification = function(\Elgg\Event $event) use ($user) {
+	if (!$event->getValue()) {
 		// already prevented
-	}
-	
-	$object = $hook->getParam('object');
-	if (!$object instanceof ElggUser || $object->guid !== $user->guid) {
 		return;
 	}
 	
-	if (!in_array($hook->getParam('action'), ['make_admin', 'remove_admin'])) {
+	$object = $event->getParam('object');
+	if (!$object instanceof \ElggUser || $object->guid !== $user->guid) {
+		return;
+	}
+	
+	if (!in_array($event->getParam('action'), ['make_admin', 'remove_admin'])) {
 		// not our event notification
 		return;
 	}
@@ -37,18 +37,17 @@ $prevent_notification = function(\Elgg\Hook $hook) use ($user) {
 	return false;
 };
 
-elgg_register_plugin_hook_handler('enqueue', 'notification', $prevent_notification);
+elgg_register_event_handler('enqueue', 'notification', $prevent_notification);
 
 // restore security notifications
 $restore_notifications = function() use (&$prevent_notification) {
-	elgg_unregister_plugin_hook_handler('enqueue', 'notification', $prevent_notification);
+	elgg_unregister_event_handler('enqueue', 'notification', $prevent_notification);
 };
 
 if ($user->isAdmin()) {
 	// make the user a normal user
 	$secret = admin_tools_make_switch_admin_secret($user);
 	if (!empty($secret)) {
-		
 		// remove the admin role from the user
 		$user->removeAdmin();
 		

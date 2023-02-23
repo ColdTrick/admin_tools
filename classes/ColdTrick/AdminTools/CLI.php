@@ -6,6 +6,9 @@ use Elgg\Cli\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * CLI command to change text in the database
+ */
 class CLI extends Command {
 	
 	/**
@@ -31,35 +34,35 @@ class CLI extends Command {
 		$replacement = new Replacement($from, $to);
 		
 		if (!$this->option('no-interaction')) {
-			
 			$this->write('Metadata: ' . $replacement->getMetadataCount());
-			$this->write('Private Settings: ' . $replacement->getPrivateSettingsCount());
 			$this->write('Annotations: ' . $replacement->getAnnotationsCount());
 			
 			$confirm = $this->ask(elgg_echo('admin_tools:cli:change_text:confirm', [$from, $to]) . ' [yes|no] ');
-			if ($confirm !== 'yes') {
+			if (!str_starts_with($confirm, 'y')) {
 				$this->write(elgg_echo('admin_tools:cli:change_text:abort'));
 				
-				return 0;
+				return self::SUCCESS;
 			}
 		}
-		
 		
 		$count = $replacement->run();
 		
 		$this->write(elgg_echo('admin_tools:cli:change_text:success', [$count]));
 		
-		return 0;
+		return self::SUCCESS;
 	}
 	
 	/**
 	 * Registers this command to the list of available CLI commands
 	 *
-	 * @param \Elgg\Hook $hook 'commands', 'cli'
+	 * @param \Elgg\Event $event 'commands', 'cli'
+	 *
+	 * @return array
 	 */
-	public static function registerCommand(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
-	    $return[] = self::class;
-	    return $return;
+	public static function registerCommand(\Elgg\Event $event): array {
+		$return = $event->getValue();
+		$return[] = self::class;
+		
+		return $return;
 	}
 }

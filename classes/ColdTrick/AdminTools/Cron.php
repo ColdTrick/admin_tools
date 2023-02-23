@@ -7,6 +7,9 @@ use Elgg\Values;
 use Elgg\Exceptions\UnexpectedValueException;
 use Elgg\Email;
 
+/**
+ * Cron handlers
+ */
 class Cron {
 	
 	protected const URL_PATTERN = '~(?xi)
@@ -34,13 +37,14 @@ class Cron {
 	/**
 	 * Detect deadlinks
 	 *
-	 * @param \Elgg\Hook $hook 'cron', 'daily'|'weekly'|'monthly'
+	 * @param \Elgg\Event $event 'cron', 'daily'|'weekly'|'monthly'
 	 *
 	 * @return void
+	 * @throws UnexpectedValueException
 	 */
-	public static function detectDeadlinks(\Elgg\Hook $hook): void {
+	public static function detectDeadlinks(\Elgg\Event $event): void {
 		$plugin = elgg_get_plugin_from_id('admin_tools');
-		if ($plugin->deadlink_enabled !== $hook->getType()) {
+		if ($plugin->deadlink_enabled !== $event->getType()) {
 			return;
 		}
 		
@@ -48,6 +52,7 @@ class Cron {
 		if (empty($setting_type_subtype)) {
 			return;
 		}
+		
 		$setting_type_subtype = json_decode($setting_type_subtype, true);
 		$type_subtypes = [];
 		foreach ($setting_type_subtype as $type_subtype) {
@@ -58,6 +63,7 @@ class Cron {
 			if (!isset($type_subtypes[$type])) {
 				$type_subtypes[$type] = [];
 			}
+			
 			$type_subtypes[$type][] = $subtype;
 		}
 		
@@ -113,8 +119,8 @@ class Cron {
 			};
 		}
 		
-		$cron_start = $hook->getParam('dt');
-		switch ($hook->getType()) {
+		$cron_start = $event->getParam('dt');
+		switch ($event->getType()) {
 			case 'monthly':
 				$max_runtime = 2 * 60 * 60; // 2 hours
 				break;
@@ -172,13 +178,14 @@ class Cron {
 					}
 					
 					$entity = $metadata->getEntity();
-					$owner = elgg_trigger_plugin_hook('deadlink_owner', 'admin_tools', [
+					$owner = elgg_trigger_event_results('deadlink_owner', 'admin_tools', [
 						'metadata' => $metadata,
 						'entity' => $entity,
 					], $entity->getOwnerEntity());
 					if (!$owner instanceof \ElggEntity) {
-						throw new UnexpectedValueException("The 'deadlink_owner', 'admin_tools' hook should return an \ElggEntity");
+						throw new UnexpectedValueException("The 'deadlink_owner', 'admin_tools' event should return an \ElggEntity");
 					}
+					
 					foreach ($urls as $url) {
 						$host = parse_url($url, PHP_URL_HOST);
 						if (empty($host)) {
@@ -302,6 +309,7 @@ class Cron {
 				foreach ($skipped_domains as $domain) {
 					$pattern .= preg_quote($domain) . '|';
 				}
+				
 				$pattern = trim($pattern, '|');
 				$pattern = '/(?>^|\W)?(?>' . $pattern . ')$/';
 			}

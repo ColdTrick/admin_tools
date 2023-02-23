@@ -2,8 +2,6 @@
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
-use ColdTrick\AdminTools\Bootstrap;
-
 return [
 	'plugin' => [
 		'version' => '6.1.1',
@@ -11,7 +9,6 @@ return [
 	'settings' => [
 		'deadlink_include_skipped_domains' => 1,
 	],
-	'bootstrap' => Bootstrap::class,
 	'actions' => [
 		'admin_tools/toggle_admin' => [],
 		'admin_tools/change_text' => ['access' => 'admin'],
@@ -19,7 +16,12 @@ return [
 		'admin_tools/change_text/export_extended' => ['access' => 'admin'],
 		'admin_tools/deadlinks/delete' => ['access' => 'admin'],
 	],
-	'hooks' => [
+	'events' => [
+		'commands' => [
+			'cli' => [
+				'\ColdTrick\AdminTools\CLI::registerCommand' => [],
+			],
+		],
 		'cron' => [
 			'daily' => [
 				'\ColdTrick\AdminTools\Cron::detectDeadlinks' => [],
@@ -31,6 +33,24 @@ return [
 				'\ColdTrick\AdminTools\Cron::detectDeadlinks' => [],
 			],
 		],
+		'make_admin' => [
+			'user' => [
+				'\ColdTrick\AdminTools\Admin::makeAdmin' => [],
+			],
+		],
+		'register' => [
+			'menu:admin_header' => [
+				'\ColdTrick\AdminTools\Menus\AdminHeader::register' => [],
+			],
+			'menu:topbar' => [
+				'\ColdTrick\AdminTools\Admin::registerTopbar' => [],
+			],
+		],
+		'remove_admin' => [
+			'user' => [
+				'\ColdTrick\AdminTools\Admin::removeAdmin' => [],
+			],
+		],
 		'setting' => [
 			'plugin' => [
 				'\ColdTrick\AdminTools\PluginSettings::save' => [],
@@ -38,8 +58,16 @@ return [
 		],
 	],
 	'view_extensions' => [
+		'admin/users/admins' => [
+			'admin_tools/hidden_admins' => [],
+		],
 		'notifications/settings/records' => [
 			'admin_tools/notifications/deadlinks' => [],
+		],
+	],
+	'view_options' => [
+		'admin_tools/change_text_preview' => [
+			'ajax' => true,
 		],
 	],
 ];

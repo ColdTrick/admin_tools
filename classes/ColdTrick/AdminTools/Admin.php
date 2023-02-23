@@ -2,6 +2,11 @@
 
 namespace ColdTrick\AdminTools;
 
+use Elgg\Menu\MenuItems;
+
+/**
+ * Admin related helpers
+ */
 class Admin {
 	
 	/**
@@ -11,7 +16,7 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public static function makeAdmin(\Elgg\Event $event) {
+	public static function makeAdmin(\Elgg\Event $event): void {
 		
 		$entity = $event->getObject();
 		if (!$entity instanceof \ElggUser) {
@@ -28,7 +33,7 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public static function removeAdmin(\Elgg\Event $event) {
+	public static function removeAdmin(\Elgg\Event $event): void {
 		
 		$entity = $event->getObject();
 		if (!$entity instanceof \ElggUser) {
@@ -41,20 +46,19 @@ class Admin {
 	/**
 	 * Add a menu item to the topbar
 	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:topbar'
+	 * @param \Elgg\Event $event 'register', 'menu:topbar'
 	 *
-	 * @return void|\ElggMenuItem[]
+	 * @return null|MenuItems
 	 */
-	public static function registerTopbar(\Elgg\Hook $hook) {
-		
+	public static function registerTopbar(\Elgg\Event $event): ?MenuItems {
 		$user = elgg_get_logged_in_user_entity();
 		if (empty($user)) {
-			return;
+			return null;
 		}
 		
 		// check if the user is an admin
 		if (!admin_tools_is_admin_user($user)) {
-			return;
+			return null;
 		}
 		
 		if ($user->isAdmin()) {
@@ -63,12 +67,13 @@ class Admin {
 			$text = elgg_echo('admin_tools:switch_to_admin');
 		}
 		
-		$return_value = $hook->getValue();
+		/* @var $return_value MenuItems */
+		$return_value = $event->getValue();
 		
 		$return_value[] = \ElggMenuItem::factory([
 			'name' => 'switch_admin',
-			'text' => $text,
 			'icon' => 'refresh',
+			'text' => $text,
 			'href' => elgg_generate_action_url('admin_tools/toggle_admin', [
 				'user_guid' => $user->guid,
 			]),

@@ -6,7 +6,7 @@
 $list = elgg_list_entities([
 	'type' => 'user',
 	'limit' => false,
-	'private_setting_names' => 'plugin:user_setting:admin_tools:switched_admin',
+	'metadata_names' => 'plugin:user_setting:admin_tools:switched_admin',
 	'pagination' => false,
 	'no_results' => elgg_echo('admin_tools:switched_admins:none'),
 ]);

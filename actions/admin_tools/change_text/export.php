@@ -13,7 +13,6 @@ $replacement = new Replacement($from, 'dummy');
 $results = false;
 switch ($table) {
 	case 'metadata':
-	case 'private_settings':
 	case 'annotations':
 		$results = $replacement->getExportResults($table);
 		break;

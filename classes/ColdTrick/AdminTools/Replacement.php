@@ -5,11 +5,21 @@ namespace ColdTrick\AdminTools;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
 
+/**
+ * Replace text in the database
+ */
 class Replacement {
 	
-	protected $from;
-	protected $to;
+	protected string $from;
 	
+	protected string $to;
+	
+	/**
+	 * Create a replacement
+	 *
+	 * @param string $from original text
+	 * @param string $to   replacement text
+	 */
 	public function __construct(string $from, string $to) {
 		$this->from = $from;
 		$this->to = $to;
@@ -20,11 +30,10 @@ class Replacement {
 	 *
 	 * @return int total rows affected
 	 */
-	public function run() {
+	public function run(): int {
 		$total = 0;
 		$total += $this->update('annotations');
 		$total += $this->update('metadata');
-		$total += $this->update('private_settings');
 		
 		return $total;
 	}
@@ -34,17 +43,8 @@ class Replacement {
 	 *
 	 * @return int
 	 */
-	public function getMetadataCount() {
+	public function getMetadataCount(): int {
 		return $this->count('metadata');
-	}
-	
-	/**
-	 * Get replacement count for private_settingstable
-	 *
-	 * @return int
-	 */
-	public function getPrivateSettingsCount() {
-		return $this->count('private_settings');
 	}
 	
 	/**
@@ -52,7 +52,7 @@ class Replacement {
 	 *
 	 * @return int
 	 */
-	public function getAnnotationsCount() {
+	public function getAnnotationsCount(): int {
 		return $this->count('annotations');
 	}
 	
@@ -63,8 +63,8 @@ class Replacement {
 	 *
 	 * @return array
 	 */
-	public function getExportResults(string $table) {
-		if (!in_array($table, ['annotations', 'metadata', 'private_settings'])) {
+	public function getExportResults(string $table): array {
+		if (!in_array($table, ['annotations', 'metadata'])) {
 			return [];
 		}
 		
@@ -94,7 +94,7 @@ class Replacement {
 	 *
 	 * @return int
 	 */
-	protected function count(string $table_name) {
+	protected function count(string $table_name): int {
 		$qb = Select::fromTable($table_name);
 		$qb->select('COUNT(*) AS total');
 		

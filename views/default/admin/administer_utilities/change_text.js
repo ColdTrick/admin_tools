@@ -6,7 +6,7 @@ define(['jquery', 'elgg/Ajax'], function ($, Ajax) {
 		
 		ajax.view('admin_tools/change_text_preview', {
 			data: {
-				from: $change_text_form.find('input[name="from"]').val(), 
+				from: $change_text_form.find('input[name="from"]').val(),
 				to: $change_text_form.find('input[name="to"]').val()
 			}
 		}).done(function(data) {
