@@ -1,7 +1,7 @@
 Admin Tools
 ===========
 
-![Elgg 4.0](https://img.shields.io/badge/Elgg-4.0-green.svg)
+![Elgg 5.0](https://img.shields.io/badge/Elgg-5.0-green.svg)
 ![Lint Checks](https://github.com/ColdTrick/admin_tools/actions/workflows/lint.yml/badge.svg?event=push)
 [![Latest Stable Version](https://poser.pugx.org/coldtrick/admin_tools/v/stable.svg)](https://packagist.org/packages/coldtrick/admin_tools)
 [![License](https://poser.pugx.org/coldtrick/admin_tools/license.svg)](https://packagist.org/packages/coldtrick/admin_tools)
