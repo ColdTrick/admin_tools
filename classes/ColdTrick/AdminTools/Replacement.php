@@ -59,7 +59,7 @@ class Replacement {
 	/**
 	 * Get replacement rows for given table
 	 *
-	 * @param string $table 'annotations', 'metadata' or 'private_settings'
+	 * @param string $table 'annotations' or 'metadata'
 	 *
 	 * @return array
 	 */
