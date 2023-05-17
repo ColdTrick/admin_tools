@@ -1,4 +1,8 @@
 <?php
+/**
+ * This file was created by Translation Editor v11.1
+ * On 2023-05-17 14:05
+ */
 
 return array (
   'admin:administer_utilities:change_text' => 'Modifier le texte',
