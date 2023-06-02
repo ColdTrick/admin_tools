@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '6.1.1',
+		'version' => '7.0',
 	],
 	'settings' => [
 		'deadlink_include_skipped_domains' => 1,
