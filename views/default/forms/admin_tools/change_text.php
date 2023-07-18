@@ -29,7 +29,7 @@ echo elgg_view_field([
 		],
 		[
 			'#type' => 'button',
-			'value' => elgg_echo('preview'),
+			'text' => elgg_echo('preview'),
 			'id' => 'change-text-preview-button',
 		],
 	],

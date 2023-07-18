@@ -71,6 +71,6 @@ echo elgg_view_module('info', $title, $table);
 
 echo elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('admin_tools:change_text:execute'),
+	'text' => elgg_echo('admin_tools:change_text:execute'),
 	'data-confirm' => elgg_echo('question:areyousure'),
 ]);
