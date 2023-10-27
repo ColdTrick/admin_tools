@@ -136,9 +136,6 @@ class Cron {
 		set_time_limit(0);
 		_elgg_services()->queryCache->disable(false);
 		
-		echo 'Starting Admin Tools deadlink detection' . PHP_EOL;
-		elgg_log('Starting Admin Tools deadlink detection', 'NOTICE');
-		
 		try {
 			$found = elgg_call(ELGG_IGNORE_ACCESS, function() use ($options, $max_runtime, $cron_start, $plugin) {
 				$start = microtime(true);
@@ -252,8 +249,7 @@ class Cron {
 		
 		_elgg_services()->queryCache->enable();
 		
-		echo "Done with Admin Tools deadlink detection, found {$found} deadlinks" . PHP_EOL;
-		elgg_log("Done with Admin Tools deadlink detection, found {$found} deadlinks", 'NOTICE');
+		$event->getParam('logger')->notice("Found {$found} deadlinks");
 	}
 	
 	/**
@@ -354,6 +350,7 @@ class Cron {
 				'admin' => 'yes',
 			],
 		]);
+		
 		/* @var $user \ElggUser */
 		foreach ($batch as $user) {
 			$settings = $user->getNotificationSettings('admin_tools:deadlinks');

@@ -28,13 +28,13 @@ class AdminHeader {
 			'name' => 'administer_utilities:change_text',
 			'text' => elgg_echo('admin:administer_utilities:change_text'),
 			'href' => 'admin/administer_utilities/change_text',
-			'parent_name' => 'administer_utilities',
+			'parent_name' => 'utilities',
 		]);
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'administer_utilities:deadlinks',
 			'text' => elgg_echo('admin:administer_utilities:deadlinks'),
 			'href' => 'admin/administer_utilities/deadlinks',
-			'parent_name' => 'administer_utilities',
+			'parent_name' => 'utilities',
 		]);
 		
 		return $result;
