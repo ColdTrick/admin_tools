@@ -17,7 +17,7 @@ class AdminHeader {
 	 * @return MenuItems|null
 	 */
 	public static function register(\Elgg\Event $event): ?MenuItems {
-		if (!elgg_is_admin_logged_in() || !elgg_in_context('admin')) {
+		if (!elgg_in_context('admin')) {
 			return null;
 		}
 		
@@ -30,12 +30,15 @@ class AdminHeader {
 			'href' => 'admin/administer_utilities/change_text',
 			'parent_name' => 'utilities',
 		]);
-		$result[] = \ElggMenuItem::factory([
-			'name' => 'administer_utilities:deadlinks',
-			'text' => elgg_echo('admin:administer_utilities:deadlinks'),
-			'href' => 'admin/administer_utilities/deadlinks',
-			'parent_name' => 'utilities',
-		]);
+		
+		if (elgg_get_plugin_setting('deadlink_enabled', 'admin_tools') !== 'disabled') {
+			$result[] = \ElggMenuItem::factory([
+				'name' => 'administer_utilities:deadlinks',
+				'text' => elgg_echo('admin:administer_utilities:deadlinks'),
+				'href' => 'admin/administer_utilities/deadlinks',
+				'parent_name' => 'utilities',
+			]);
+		}
 		
 		return $result;
 	}

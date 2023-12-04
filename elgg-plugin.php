@@ -7,6 +7,7 @@ return [
 		'version' => '8.0',
 	],
 	'settings' => [
+		'deadlink_enabled' => 'disabled',
 		'deadlink_include_skipped_domains' => 1,
 	],
 	'actions' => [
