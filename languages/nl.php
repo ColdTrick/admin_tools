@@ -1,10 +1,12 @@
 <?php
 /**
- * This file was created by Translation Editor v11.1
- * On 2023-05-17 14:03
+ * This file was created by Translation Editor v13.0
+ * On 2024-01-09 14:17
  */
 
 return array (
+  'admin_tools:upgrade:2024010901:title' => 'Herstel beheer functionaliteiten voor gewisselde beheerders',
+  'admin_tools:upgrade:2024010901:description' => 'Beheerders welke waren gewisseld naar gewone gebruiker moeten hun beheerrechten weer terug krijgen',
   'admin_tools:settings:deadlink:include_skipped_domains' => 'Neem de overgeslagen domeinen op in het CSV-bestand',
   'admin_tools:settings:deadlink:include_success_results' => 'Neem de succesvolle resultaten op in het CSV-bestand',
   'admin:administer_utilities:deadlinks' => 'Dode Links',

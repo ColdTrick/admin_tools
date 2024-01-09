@@ -6,13 +6,12 @@
 /**
  * Check if the user is an admin
  *
- * @param \ElggUser $user the user to check (default: current user)
+ * @param \ElggUser|null $user the user to check (default: current user)
  *
  * @return bool
  */
 function admin_tools_is_admin_user(\ElggUser $user = null): bool {
-	
-	// no param, check current logged in user
+	// no param, check current logged-in user
 	if (empty($user)) {
 		$user = elgg_get_logged_in_user_entity();
 	}
@@ -44,12 +43,12 @@ function admin_tools_is_admin_user(\ElggUser $user = null): bool {
 /**
  * Create a secret code to toggle admin/normal user
  *
- * @param \ElggUser $user the user to create the secret for (default: current user)
+ * @param \ElggUser|null $user the user to create the secret for (default: current user)
  *
  * @return null|string
  */
 function admin_tools_make_switch_admin_secret(\ElggUser $user = null): ?string {
-	// no param, check current logged in user
+	// no param, check current logged-in user
 	if (empty($user)) {
 		$user = elgg_get_logged_in_user_entity();
 	}
@@ -67,17 +66,17 @@ function admin_tools_make_switch_admin_secret(\ElggUser $user = null): ?string {
 /**
  * Validate the secret of a user to switch to the real thing
  *
- * @param string    $secret the string to validate
- * @param \ElggUser $user   the user to validate for (default: current user)
+ * @param string         $secret the string to validate
+ * @param \ElggUser|null $user   the user to validate for (default: current user)
  *
  * @return bool
  */
-function admin_tools_validate_switch_admin_secret($secret, \ElggUser $user = null): bool {
+function admin_tools_validate_switch_admin_secret(string $secret, \ElggUser $user = null): bool {
 	if (empty($secret)) {
 		return false;
 	}
 	
-	// no param, check current logged in user
+	// no param, check current logged-in user
 	if (empty($user)) {
 		$user = elgg_get_logged_in_user_entity();
 	}

@@ -20,7 +20,7 @@ return [
 	'admin_tools:settings:deadlink:type_subtype' => "Content types to scan for dead links",
 	
 	// change text
-	'admin_tools:change_text:warning' => "This function will change all occurences of the given text in all text columns of the database tables.
+	'admin_tools:change_text:warning' => "This function will change all occurrences of the given text in all text columns of the database tables.
 It will use direct queries so there will be no system events that the data has been changed.
 You might need to perform additional actions like flushing the cache or reindexing a search engine to make sure other parts of the system are aware of the changes.
 There is no way to revert these specific changes, so make sure you have a backup.",
@@ -48,7 +48,7 @@ For more information use the extended export feature however keep in mind this c
 	'admin_tools:cli:change_text:description' => "Replace text in all text columns in the database",
 	'admin_tools:cli:change_text:from' => "Text to replace",
 	'admin_tools:cli:change_text:to' => "Text to change into",
-	'admin_tools:cli:change_text:confirm' => "Are you sure you wish to replace all occurences of %s with %s?",
+	'admin_tools:cli:change_text:confirm' => "Are you sure you wish to replace all occurrences of %s with %s?",
 	'admin_tools:cli:change_text:abort' => "Change aborted",
 	'admin_tools:cli:change_text:success' => "Text has been changed for %s occurrences",
 	
@@ -68,7 +68,11 @@ Check out the results here:
 	'admin_tools:action:change_text:success' => "Replaced text in %s rows",
 	
 	'admin_tools:action:deadlink:delete:not_exists' => "The file or directory doesn't exist",
-	'admin_tools:action:deadlink:delete:fail' => "An error occured while deleting the file or directory",
+	'admin_tools:action:deadlink:delete:fail' => "An error occurred while deleting the file or directory",
 	'admin_tools:action:deadlink:delete:success:directory' => "Successfully deleted the directory '%s'",
 	'admin_tools:action:deadlink:delete:success:file' => "Successfully deleted the file '%s'",
+	
+	// upgrades
+	'admin_tools:upgrade:2024010901:title' => "Restore admin functionality for switched admins",
+	'admin_tools:upgrade:2024010901:description' => "Admins that have switched to normal user should have their admin rights restored",
 ];

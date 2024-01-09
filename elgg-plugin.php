@@ -1,5 +1,7 @@
 <?php
 
+use ColdTrick\AdminTools\Upgrades\RestoreAdminRights;
+
 require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
@@ -16,6 +18,16 @@ return [
 		'admin_tools/change_text/export' => ['access' => 'admin'],
 		'admin_tools/change_text/export_extended' => ['access' => 'admin'],
 		'admin_tools/deadlinks/delete' => ['access' => 'admin'],
+	],
+	'entities' => [
+		[
+			'type' => 'user',
+			'subtype' => 'user',
+			'class' => 'AdminToolsUser',
+			'capabilities' => [
+				'searchable' => true,
+			],
+		],
 	],
 	'events' => [
 		'commands' => [
@@ -36,7 +48,7 @@ return [
 		],
 		'make_admin' => [
 			'user' => [
-				'\ColdTrick\AdminTools\Admin::makeAdmin' => [],
+				'\ColdTrick\AdminTools\Admin::removeTempUserSwitch' => [],
 			],
 		],
 		'register' => [
@@ -49,7 +61,7 @@ return [
 		],
 		'remove_admin' => [
 			'user' => [
-				'\ColdTrick\AdminTools\Admin::removeAdmin' => [],
+				'\ColdTrick\AdminTools\Admin::removeTempUserSwitch' => [],
 			],
 		],
 		'setting' => [
@@ -58,10 +70,10 @@ return [
 			],
 		],
 	],
+	'upgrades' => [
+		RestoreAdminRights::class,
+	],
 	'view_extensions' => [
-		'admin/users/admins' => [
-			'admin_tools/hidden_admins' => [],
-		],
 		'notifications/settings/records' => [
 			'admin_tools/notifications/deadlinks' => [],
 		],
