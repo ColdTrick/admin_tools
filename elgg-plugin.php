@@ -23,7 +23,7 @@ return [
 		[
 			'type' => 'user',
 			'subtype' => 'user',
-			'class' => 'AdminToolsUser',
+			'class' => \AdminToolsUser::class,
 			'capabilities' => [
 				'searchable' => true,
 			],
