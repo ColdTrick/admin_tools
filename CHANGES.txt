@@ -1,6 +1,10 @@
 Version history
 ===============
 
+8.1.1 (2024-03-14):
+
+- fixed: OOM when saving plugin settings
+
 8.1 (2024-01-12):
 
 - changed: different implementation for admins to switch to normal user
