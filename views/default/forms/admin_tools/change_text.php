@@ -1,6 +1,6 @@
 <?php
 
-elgg_require_js('admin/administer_utilities/change_text');
+elgg_import_esm('admin/administer_utilities/change_text');
 
 echo elgg_view_field([
 	'#type' => 'fieldset',

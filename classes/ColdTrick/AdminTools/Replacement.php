@@ -114,7 +114,11 @@ class Replacement {
 	 */
 	protected function update(string $table_name) {
 		$qb = Update::table($table_name);
-		$qb->set('value', "replace(value, '{$this->from}', '{$this->to}')");
+		
+		$from = $qb->param($this->from, ELGG_VALUE_STRING);
+		$to = $qb->param($this->to, ELGG_VALUE_STRING);
+		
+		$qb->set('value', "replace(value, '{$from}', '{$to}')");
 		
 		$qb->where($qb->compare('value', 'like', "%{$this->from}%", ELGG_VALUE_STRING, true));
 

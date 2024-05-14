@@ -56,7 +56,7 @@ return [
 				'\ColdTrick\AdminTools\Menus\AdminHeader::register' => [],
 			],
 			'menu:topbar' => [
-				'\ColdTrick\AdminTools\Admin::registerTopbar' => [],
+				'\ColdTrick\AdminTools\Menus\Topbar::register' => [],
 			],
 		],
 		'remove_admin' => [
