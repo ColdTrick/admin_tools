@@ -16,8 +16,6 @@ Vous devrez peut-être effectuer des actions supplémentaires, comme vider le ca
   'admin_tools:change_text:execute' => 'Exécuter',
   'admin_tools:switch_to_user' => 'Mode utilisateur',
   'admin_tools:switch_to_admin' => 'Mode administrateur',
-  'admin_tools:switched_admins:title' => 'Administrateurs qui sont passés temporairement comme utilisateur normal',
-  'admin_tools:switched_admins:none' => 'Actuellement, il n\'y a pas d\'administrateurs qui sont passés en utilisateur normal',
   'admin_tools:cli:change_text:description' => 'Remplacer le texte dans toutes les colonnes de texte de la base de données',
   'admin_tools:cli:change_text:from' => 'Texte à remplacer',
   'admin_tools:cli:change_text:to' => 'Texte à modifier en',
