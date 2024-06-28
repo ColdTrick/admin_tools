@@ -6,7 +6,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '8.1.1',
+		'version' => '9.0',
 	],
 	'settings' => [
 		'deadlink_enabled' => 'disabled',
