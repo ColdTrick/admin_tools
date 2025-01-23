@@ -118,7 +118,7 @@ class Replacement {
 		$from = $qb->param($this->from, ELGG_VALUE_STRING);
 		$to = $qb->param($this->to, ELGG_VALUE_STRING);
 		
-		$qb->set('value', "replace(value, '{$from}', '{$to}')");
+		$qb->set('value', "replace(value, {$from}, {$to})");
 		
 		$qb->where($qb->compare('value', 'like', "%{$this->from}%", ELGG_VALUE_STRING, true));
 
