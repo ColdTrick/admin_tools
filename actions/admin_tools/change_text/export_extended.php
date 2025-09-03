@@ -39,9 +39,9 @@ fputcsv($fh, [
 	'ID',
 	'Name',
 	'Value',
-], ';');
+], ';', '"', '\\');
 
-_elgg_services()->db->disableQueryCache();
+_elgg_services()->queryCache->disable();
 
 // contents
 foreach ($results as $row) {
@@ -49,7 +49,7 @@ foreach ($results as $row) {
 	
 	$entity_url = '';
 	$owner = false;
-	if ($entity instanceof ElggEntity) {
+	if ($entity instanceof \ElggEntity) {
 		$entity_url = $entity->getURL();
 		$owner = $entity->getOwnerEntity();
 	}
@@ -65,7 +65,7 @@ foreach ($results as $row) {
 		(int) $row->id,
 		$row->name,
 		$row->value,
-	], ';');
+	], ';', '"', '\\');
 }
 
 $file->close();

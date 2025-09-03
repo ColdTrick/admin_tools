@@ -110,9 +110,9 @@ class Replacement {
 	 *
 	 * @param string $table_name table name
 	 *
-	 * @return bool|int
+	 * @return int
 	 */
-	protected function update(string $table_name) {
+	protected function update(string $table_name): int {
 		$qb = Update::table($table_name);
 		
 		$from = $qb->param($this->from, ELGG_VALUE_STRING);

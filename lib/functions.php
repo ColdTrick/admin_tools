@@ -10,7 +10,7 @@
  *
  * @return bool
  */
-function admin_tools_is_admin_user(\ElggUser $user = null): bool {
+function admin_tools_is_admin_user(?\ElggUser $user = null): bool {
 	// no param, check current logged-in user
 	if (empty($user)) {
 		$user = elgg_get_logged_in_user_entity();
@@ -47,7 +47,7 @@ function admin_tools_is_admin_user(\ElggUser $user = null): bool {
  *
  * @return null|string
  */
-function admin_tools_make_switch_admin_secret(\ElggUser $user = null): ?string {
+function admin_tools_make_switch_admin_secret(?\ElggUser $user = null): ?string {
 	// no param, check current logged-in user
 	if (empty($user)) {
 		$user = elgg_get_logged_in_user_entity();
@@ -71,7 +71,7 @@ function admin_tools_make_switch_admin_secret(\ElggUser $user = null): ?string {
  *
  * @return bool
  */
-function admin_tools_validate_switch_admin_secret(string $secret, \ElggUser $user = null): bool {
+function admin_tools_validate_switch_admin_secret(string $secret, ?\ElggUser $user = null): bool {
 	if (empty($secret)) {
 		return false;
 	}

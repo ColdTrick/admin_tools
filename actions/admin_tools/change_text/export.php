@@ -36,7 +36,7 @@ fputcsv($fh, [
 	'ID',
 	'Name',
 	'Value',
-], ';');
+], ';', '"', '\\');
 
 // contents
 foreach ($results as $row) {
@@ -55,7 +55,7 @@ foreach ($results as $row) {
 		(int) $row->id,
 		$row->name,
 		$row->value,
-	], ';');
+	], ';', '"', '\\');
 }
 
 $file->close();
