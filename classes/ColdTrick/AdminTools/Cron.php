@@ -3,9 +3,9 @@
 namespace ColdTrick\AdminTools;
 
 use Elgg\Database\QueryBuilder;
-use Elgg\Values;
-use Elgg\Exceptions\UnexpectedValueException;
 use Elgg\Email;
+use Elgg\Exceptions\UnexpectedValueException;
+use Elgg\Values;
 
 /**
  * Cron handlers
@@ -154,7 +154,7 @@ class Cron {
 					'Owner URL',
 					'Owner e-mail',
 					'Status',
-				], ';', '"');
+				], ';', '"', '\\');
 				
 				$deadlinks_found = 0;
 				$links_logged = 0;
@@ -221,7 +221,7 @@ class Cron {
 							$owner->getURL(),
 							$owner->email,
 							$status,
-						], ';', '"');
+						], ';', '"', '\\');
 					}
 					
 					// don't scan again until rescan is required
