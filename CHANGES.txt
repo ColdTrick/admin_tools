@@ -1,6 +1,10 @@
 Version history
 ===============
 
+10.0 (2025-11-13):
+
+- changed: updated for Elgg 6.3 and PHP 8.4
+
 9.0.1 (2025-01-23):
 
 - fixed: use correct query param format in replace text
