@@ -2,6 +2,7 @@
 
 namespace ColdTrick\AdminTools;
 
+use Elgg\Database\MetadataTable;
 use Elgg\Database\QueryBuilder;
 use Elgg\Email;
 use Elgg\Exceptions\UnexpectedValueException;
@@ -103,11 +104,11 @@ class Cron {
 		$rescan = (int) $plugin->deadlink_rescan;
 		if ($rescan > 0) {
 			$options['wheres'][] = function(QueryBuilder $qb, $main_alias) use ($rescan) {
-				$not_scanned = $qb->subquery('metadata');
+				$not_scanned = $qb->subquery(MetadataTable::TABLE_NAME);
 				$not_scanned->select('entity_guid')
 					->where($qb->compare('name', '=', 'admin_tools_deadlink_scanned', ELGG_VALUE_STRING));
 				
-				$rescanned = $qb->subquery('metadata');
+				$rescanned = $qb->subquery(MetadataTable::TABLE_NAME);
 				$rescanned->select('entity_guid')
 					->where($qb->compare('name', '=', 'admin_tools_deadlink_scanned', ELGG_VALUE_STRING))
 					->andWhere($qb->compare('value', '<', Values::normalizeTimestamp("-{$rescan} days"), ELGG_VALUE_TIMESTAMP));
@@ -159,9 +160,9 @@ class Cron {
 				$deadlinks_found = 0;
 				$links_logged = 0;
 				
-				/* @var $batch \ElggBatch */
+				/** @var \ElggBatch $batch */
 				$batch = elgg_get_metadata($options);
-				/* @var $metadata \ElggMetadata */
+				/** @var \ElggMetadata $metadata */
 				foreach ($batch as $metadata) {
 					if ((microtime(true) - $start) > $max_runtime) {
 						break;
@@ -332,16 +333,17 @@ class Cron {
 		array_pop($path);
 		$path = implode('/', $path);
 		
-		$url = elgg_normalize_url(elgg_http_add_url_query_elements('admin/administer_utilities/deadlinks', [
+		$url = elgg_generate_url('admin', [
+			'segments' => 'administer_utilities/deadlinks',
 			'dir' => $path,
-		]));
+		]);
 		
 		$notification_params = [
-			'action' => 'admin_tools:deadlinks',
 			'url' => $url,
+			'deadlinks_count' => $deadlinks,
 		];
 		
-		/* @var $batch \ElggBatch */
+		/** @var \ElggBatch $batch */
 		$batch = elgg_get_entities([
 			'type' => 'user',
 			'limit' => false,
@@ -351,23 +353,17 @@ class Cron {
 			],
 		]);
 		
-		/* @var $user \ElggUser */
+		/** @var \ElggUser $user */
 		foreach ($batch as $user) {
-			$settings = $user->getNotificationSettings('admin_tools:deadlinks');
-			$methods = array_keys(array_filter($settings));
+			$methods = $user->getNotificationSettings('admin_tools:deadlinks', true);
 			if (empty($methods)) {
 				continue;
 			}
 			
-			$subject = elgg_echo('admin_tools:notification:deadlinks:subject', [], $user->language);
-			$summary = elgg_echo('admin_tools:notification:deadlinks:summary', [], $user->language);
-			$body = elgg_echo('admin_tools:notification:deadlinks:body', [
-				$deadlinks,
-				$url,
-			], $user->language);
-			$notification_params['summary'] = $summary;
+			$params = $notification_params;
+			$params['methods_override'] = $methods;
 			
-			notify_user($user->guid, 0, $subject, $body, $notification_params, $methods);
+			$user->notify('admin_tools:deadlinks', $user, $params);
 		}
 		
 		$email = elgg_get_plugin_setting('deadlink_report_email', 'admin_tools');

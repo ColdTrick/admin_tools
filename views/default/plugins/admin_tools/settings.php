@@ -1,6 +1,6 @@
 <?php
 
-/* @var $plugin \ElggPlugin */
+/** @var \ElggPlugin $plugin */
 $plugin = elgg_extract('entity', $vars);
 
 // deadlink detection settings
@@ -42,21 +42,17 @@ $deadlink .= elgg_view_field([
 ]);
 
 $deadlink .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin_tools:settings:deadlink:include_skipped_domains'),
 	'name' => 'params[deadlink_include_skipped_domains]',
-	'value' => 1,
-	'checked' => (bool) $plugin->deadlink_include_skipped_domains,
-	'switch' => true,
+	'value' => $plugin->deadlink_include_skipped_domains,
 ]);
 
 $deadlink .= elgg_view_field([
-	'#type' => 'checkbox',
+	'#type' => 'switch',
 	'#label' => elgg_echo('admin_tools:settings:deadlink:include_success_results'),
 	'name' => 'params[deadlink_include_success_results]',
-	'value' => 1,
-	'checked' => (bool) $plugin->deadlink_include_success_results,
-	'switch' => true,
+	'value' => $plugin->deadlink_include_success_results,
 ]);
 
 $deadlink .= elgg_view_field([

@@ -1,5 +1,9 @@
 <?php
 
+use ColdTrick\AdminTools\Controllers\Actions\ChangeText;
+use ColdTrick\AdminTools\Controllers\Actions\ChangeTextExport;
+use ColdTrick\AdminTools\Controllers\Actions\ChangeTextExportExtended;
+use ColdTrick\AdminTools\Notifications\DeadLinks;
 use ColdTrick\AdminTools\Upgrades\RestoreAdminRights;
 
 require_once(dirname(__FILE__) . '/lib/functions.php');
@@ -14,9 +18,9 @@ return [
 	],
 	'actions' => [
 		'admin_tools/toggle_admin' => [],
-		'admin_tools/change_text' => ['access' => 'admin'],
-		'admin_tools/change_text/export' => ['access' => 'admin'],
-		'admin_tools/change_text/export_extended' => ['access' => 'admin'],
+		'admin_tools/change_text' => ['access' => 'admin', 'controller' => ChangeText::class],
+		'admin_tools/change_text/export' => ['access' => 'admin', 'controller' => ChangeTextExport::class],
+		'admin_tools/change_text/export_extended' => ['access' => 'admin', 'controller' => ChangeTextExportExtended::class],
 		'admin_tools/deadlinks/delete' => ['access' => 'admin'],
 	],
 	'entities' => [
@@ -70,8 +74,14 @@ return [
 			],
 		],
 	],
-	'upgrades' => [
-		RestoreAdminRights::class,
+	'notifications' => [
+		'user' => [
+			'user' => [
+				'admin_tools:deadlinks' => [
+					DeadLinks::class => [],
+				],
+			],
+		],
 	],
 	'view_extensions' => [
 		'notifications/settings/records' => [

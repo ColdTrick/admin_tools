@@ -27,7 +27,9 @@ class AdminHeader {
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'administer_utilities:change_text',
 			'text' => elgg_echo('admin:administer_utilities:change_text'),
-			'href' => 'admin/administer_utilities/change_text',
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'administer_utilities/change_text',
+			]),
 			'parent_name' => 'utilities',
 		]);
 		
@@ -35,7 +37,9 @@ class AdminHeader {
 			$result[] = \ElggMenuItem::factory([
 				'name' => 'administer_utilities:deadlinks',
 				'text' => elgg_echo('admin:administer_utilities:deadlinks'),
-				'href' => 'admin/administer_utilities/deadlinks',
+				'href' => elgg_generate_url('admin', [
+					'segments' => 'administer_utilities/deadlinks',
+				]),
 				'parent_name' => 'utilities',
 			]);
 		}

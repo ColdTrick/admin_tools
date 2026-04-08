@@ -11,7 +11,9 @@ $breadcrumb = [];
 $breadcrumb[] = \ElggMenuItem::factory([
 	'name' => 'root',
 	'text' => elgg_echo('admin:administer_utilities:deadlinks'),
-	'href' => 'admin/administer_utilities/deadlinks',
+	'href' => elgg_generate_url('admin', [
+		'segments' => 'administer_utilities/deadlinks',
+	]),
 ]);
 if (!empty($subdirectory)) {
 	$parts = explode('/', trim($subdirectory, '/'));
@@ -20,7 +22,8 @@ if (!empty($subdirectory)) {
 		$breadcrumb[] = \ElggMenuItem::factory([
 			'name' => $sub . $part,
 			'text' => $part,
-			'href' => elgg_http_add_url_query_elements('admin/administer_utilities/deadlinks', [
+			'href' => elgg_generate_url('admin', [
+				'segments' => 'administer_utilities/deadlinks',
 				'dir' => $sub . $part,
 			]),
 		]);
@@ -62,7 +65,8 @@ foreach ($dh as $fileinfo) {
 		continue;
 	} elseif ($fileinfo->isDir()) {
 		$row = [];
-		$row[] = elgg_format_element('td', [], elgg_view_url(elgg_http_add_url_query_elements('admin/administer_utilities/deadlinks', [
+		$row[] = elgg_format_element('td', [], elgg_view_url(elgg_generate_url('admin', [
+			'segments' => 'administer_utilities/deadlinks',
 			'dir' => Paths::sanitize($subdirectory . $filename),
 		]), $filename, [
 			'icon' => 'folder',

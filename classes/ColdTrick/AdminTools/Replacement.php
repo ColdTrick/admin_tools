@@ -2,6 +2,8 @@
 
 namespace ColdTrick\AdminTools;
 
+use Elgg\Database\AnnotationsTable;
+use Elgg\Database\MetadataTable;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
 
@@ -32,8 +34,8 @@ class Replacement {
 	 */
 	public function run(): int {
 		$total = 0;
-		$total += $this->update('annotations');
-		$total += $this->update('metadata');
+		$total += $this->update(AnnotationsTable::TABLE_NAME);
+		$total += $this->update(MetadataTable::TABLE_NAME);
 		
 		return $total;
 	}
@@ -44,7 +46,7 @@ class Replacement {
 	 * @return int
 	 */
 	public function getMetadataCount(): int {
-		return $this->count('metadata');
+		return $this->count(MetadataTable::TABLE_NAME);
 	}
 	
 	/**
@@ -53,7 +55,7 @@ class Replacement {
 	 * @return int
 	 */
 	public function getAnnotationsCount(): int {
-		return $this->count('annotations');
+		return $this->count(AnnotationsTable::TABLE_NAME);
 	}
 	
 	/**
@@ -64,7 +66,7 @@ class Replacement {
 	 * @return array
 	 */
 	public function getExportResults(string $table): array {
-		if (!in_array($table, ['annotations', 'metadata'])) {
+		if (!in_array($table, [AnnotationsTable::TABLE_NAME, MetadataTable::TABLE_NAME])) {
 			return [];
 		}
 		
