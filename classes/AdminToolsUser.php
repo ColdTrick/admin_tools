@@ -13,7 +13,7 @@ class AdminToolsUser extends \ElggUser {
 			return !empty($this->getPluginSetting('admin_tools', 'switched_admin'));
 		});
 		
-		if (!\Elgg\Application::isCli() && $switched) {
+		if (!elgg_is_cli() && $switched) {
 			return false;
 		}
 		
