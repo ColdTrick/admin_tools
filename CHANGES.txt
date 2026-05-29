@@ -1,6 +1,10 @@
 Version history
 ===============
 
+11.0 (2026-05-29):
+
+- changed: updated for Elgg 7.0
+
 10.0 (2025-11-13):
 
 - changed: updated for Elgg 6.3 and PHP 8.4
