@@ -33,7 +33,7 @@ class Topbar {
 			$text = elgg_echo('admin_tools:switch_to_admin');
 		}
 		
-		/* @var $return_value MenuItems */
+		/** @var MenuItems $return_value */
 		$return_value = $event->getValue();
 		
 		$return_value[] = \ElggMenuItem::factory([
