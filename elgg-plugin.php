@@ -10,7 +10,7 @@ require_once(dirname(__FILE__) . '/lib/functions.php');
 
 return [
 	'plugin' => [
-		'version' => '11.0',
+		'version' => '11.0.1',
 	],
 	'settings' => [
 		'deadlink_enabled' => 'disabled',
